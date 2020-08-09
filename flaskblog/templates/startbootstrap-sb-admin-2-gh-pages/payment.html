@@ -1,0 +1,106 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      {% include 'Topbar.html' %}
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+
+        <div class="container-fluid content-row">
+          <form
+            name="paiment"
+            method="POST"
+            action="https://preprod.gpgcheckout.com/Paiement_test/Validation_paiement.php"
+          >
+            <input
+              type="hidden"
+              name="NumSite"
+              value="{{NumSite}}"
+            /><br /><br />
+            <input
+              type="hidden"
+              name="Password"
+              value="{{Password}}"
+            /><br /><br />
+            <input
+              type="hidden"
+              name="orderID"
+              value="{{orderID}}"
+            /><br /><br />
+            <input type="hidden" name="Amount" value="{{Amount}}" /><br /><br />
+            <input
+              type="hidden"
+              name="Currency"
+              value="{{Currency}}"
+            /><br /><br />
+            <input type="hidden" name="Language" value="fr" /><br /><br />
+            <input
+              type="hidden"
+              name="EMAIL"
+              value="contact@gpgcheckout.com"
+            /><br /><br />
+            <input type="hidden" name="CustLastName" value="nom" /><br /><br />
+            <input
+              type="hidden"
+              name="CustFirstName"
+              value="prenom"
+            /><br /><br />
+            <input
+              type="hidden"
+              name="CustAddress"
+              value="ariana"
+            /><br /><br />
+            <input type="hidden" name="CustZIP" value="2080" /><br /><br />
+            <input type="hidden" name="CustCity" value="ariana" /><br /><br />
+            <input
+              type="hidden"
+              name="CustCountry"
+              value="tunisie"
+            /><br /><br />
+            <input type="hidden" name="CustTel" value="26547852" /><br /><br />
+            <input type="hidden" name="PayementType" value="1" /><br /><br />
+            <input type="hidden" name="MerchandSession" value="" /><br /><br />
+            <input
+              type="hidden"
+              name="orderProducts"
+              value="2* jeans(Rouge,L) , 2*Robe(Noir,XL)"
+            /><br /><br />
+            <input
+              type="hidden"
+              name="signature"
+              value="{{signature}}"
+            /><br /><br />
+            <input type="hidden" name="AmountSecond" value="" /><br /><br />
+            <input type="hidden" name="vad" value="345566666" /><br /><br />
+            <input type="hidden" name="Terminal" value="002" /><br /><br />
+            <input type="hidden" name="TauxConversion" value=" " /><br /><br />
+            <input type="hidden" name="BatchNumber" value=" " /><br /><br />
+            <input
+              type="hidden"
+              name="MerchantReference"
+              value=" "
+            /><br /><br />
+            <input type="hidden" name="Reccu_Num" value="" /><br /><br />
+            <input
+              type="hidden"
+              name="Reccu_ExpiryDate "
+              value=""
+            /><br /><br />
+            <input
+              type="hidden"
+              name="Reccu_Frecuency "
+              value=" "
+            /><br /><br />
+            <input type="submit" name="Valider" value="Valider" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
