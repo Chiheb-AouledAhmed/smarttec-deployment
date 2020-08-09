@@ -35,7 +35,6 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
 
     with app.app_context():
-        db.drop_all()
         db.create_all()
         pwd = bcrypt.generate_password_hash(
             "admin123").decode('utf-8')
