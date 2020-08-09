@@ -33,7 +33,7 @@ def create_app(config_class=Config):
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
-    """
+
     with app.app_context():
         db.drop_all()
         db.create_all()
@@ -43,5 +43,5 @@ def create_app(config_class=Config):
                           email="adminadmin@admin.com", password=pwd, acc_rights=0)
         db.session.add(admin_user)
         db.session.commit()
-    """
+
     return app
