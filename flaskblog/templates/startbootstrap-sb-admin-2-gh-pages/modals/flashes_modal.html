@@ -1,0 +1,47 @@
+<div
+  class="modal fade"
+  id="flashes"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="flashModalLabel"
+  aria-hidden="false"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="container-fluid">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %}
+          <div class="flashes" id="flashes-on">
+            {% for category,message in messages %}
+            <div class="alert alert-{{category}}" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}{% endif %} {% endwith %}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-secondary cancel"
+          type="button"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

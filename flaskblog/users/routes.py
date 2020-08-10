@@ -2,8 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskblog import db, bcrypt
 from flaskblog.models import User, Post
-from flaskblog.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm)
+from flaskblog.users.forms import *
 from flaskblog.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -26,7 +25,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@users.route("/login", methods=['GET', 'POST'])
+@ users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -42,21 +41,21 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@users.route("/logout")
+@ users.route("/logout")
 def logout():
     logout_user()
-    #flash('An email has been sent with instructions to reset your password.', 'info')
+    # flash('An email has been sent with instructions to reset your password.', 'info')
     return redirect(url_for('main.home'))
 
 
-@users.route("/mesformations")
-@login_required
+@ users.route("/mesformations")
+@ login_required
 def mesformations():
     return render_template('mesFormations.html', current_user=current_user)
 
 
-@users.route("/account", methods=['GET', 'POST'])
-@login_required
+@ users.route("/account", methods=['GET', 'POST'])
+@ login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
@@ -77,7 +76,7 @@ def account():
                            image_file=image_file, form=form)
 
 
-@users.route("/user/<string:username>")
+@ users.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
@@ -87,7 +86,7 @@ def user_posts(username):
     return render_template('user_posts.html', posts=posts, user=user)
 
 
-@users.route("/reset_password", methods=['GET', 'POST'])
+@ users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -100,7 +99,7 @@ def reset_request():
     return render_template('reset_request.html', title='Reset Password', form=form)
 
 
-@users.route("/reset_password/<token>", methods=['GET', 'POST'])
+@ users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -117,3 +116,73 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+
+@users.route("/add/<default_url>", methods=['GET', 'POST'])
+def add_user(default_url):
+    add_form = RegistrationForm()
+    if(not(add_form.acc_rights.data)):
+        add_form.acc_rights.data = 2
+    if(add_form.validate_on_submit()):
+        hashed_password = bcrypt.generate_password_hash(
+            add_form.password.data).decode('utf-8')
+        user = User(username=add_form.username.data,
+                    email=add_form.email.data, password=hashed_password, acc_rights=add_form.acc_rights.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for(default_url))
+    messages = []
+    for field, errors in add_form.errors.items():
+        messages.append(((', '.join(errors))))
+    for message in messages:
+        flash(message, 'danger')
+    return redirect(url_for(default_url))
+
+
+@users.route("/delete/<default_url>", methods=['GET', 'POST'])
+def delete_user(default_url):
+    delete_form = DeleteAccountForm()
+    if(delete_form.validate_on_submit()):
+        username = delete_form.this_user.data
+        print(username)
+        user = User.query.filter_by(username=username).first()
+        if(user):
+            db.session.delete(user)
+            db.session.commit()
+            flash("username "+username+" successfully deleted", 'success')
+        else:
+            flash("username not found", 'danger')
+        return redirect(url_for(default_url))
+    messages = []
+    for field, errors in delete_form.errors.items():
+        messages.append((field+" : "+(', '.join(errors))))
+    for message in messages:
+        flash(message, 'danger')
+    return redirect(url_for(default_url))
+
+
+@users.route("/modify/<default_url>", methods=['GET', 'POST'])
+def modify_user(default_url):
+    update_form = UpdateAccountForm()
+    if(update_form.validate_on_submit()):
+        username = update_form.this_user.data
+        user = User.query.filter_by(username=username).first()
+        if(user):
+            if(update_form.username.data):
+                user.username = update_form.username.data
+            if(update_form.email.data):
+                user.email = update_form.email.data
+            if(update_form.password.data):
+                user.password = update_form.password.data
+            db.session.commit()
+            flash('username '+username+" successfully updated", 'success')
+        else:
+            flash('unsuccessful operation', 'danger')
+
+        return redirect(url_for(default_url))
+    messages = []
+    for field, errors in update_form.errors.items():
+        messages.append((', '.join(errors)))
+    for message in messages:
+        flash(message, 'danger')
+    return redirect(url_for(default_url))

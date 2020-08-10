@@ -48,93 +48,46 @@
           >
             <div class="col-sm-12 course-section">
               <div class="section-title">
-                Liste des formatteurs
+                Liste des utlisateurs
               </div>
               <ul class="section-list">
-                <li class="section-item">
+                {% for user in form_users %}
+                <li class="section-item form-modif">
                   <a class="item" href="#">
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
                     <div class="float-left">
-                      Document 1
+                      {{user.username}}
                     </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                      data-username="{{user.username}}"
+                      data-toggle="modal"
+                      data-target="#deleteModal"
+                    >
+                      Supprimer <i class="fas fa-trash-alt"></i>
                     </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                      data-username="{{user.username}}"
+                      data-email="{{user.email}}"
+                      data-img_path="{{user.image_file}}"
+                      data-toggle="modal"
+                      data-target="#modifyModal"
+                    >
+                      Modifier <i class="far fa-id-badge"></i>
                     </div>
                   </a>
                 </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
+                {% endfor %}
               </ul>
             </div>
             <div
-              class="btn-primary btn-sm float-right lecture-start"
+              class="btn btn-primary btn-sm float-right lecture-start form-modif"
               data-toggle="modal"
               data-target="#addModal"
+              data-usertype="1"
               type="button"
             >
               <i class="fas fa-plus-circle"></i>Ajouter un formatteur
@@ -152,7 +105,7 @@
               </div>
               <ul class="section-list">
                 {% for user in users %}
-                <li class="section-item">
+                <li class="section-item form-modif">
                   <a class="item" href="#">
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
@@ -161,14 +114,15 @@
                       {{user.username}}
                     </div>
                     <div
-                      class="btn-primary btn-sm float-right lecture-start"
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                      data-username="{{user.username}}"
                       data-toggle="modal"
                       data-target="#deleteModal"
                     >
                       Supprimer <i class="fas fa-trash-alt"></i>
                     </div>
                     <div
-                      class="btn-primary btn-sm float-right lecture-start user"
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
                       data-username="{{user.username}}"
                       data-email="{{user.email}}"
                       data-img_path="{{user.image_file}}"
@@ -186,9 +140,10 @@
               class="btn btn-primary btn-sm float-right lecture-start"
               data-toggle="modal"
               data-target="#addModal"
+              data-usertype="1"
               type="button"
             >
-              <i class="fas fa-plus-circle"></i>Ajouter un utilisateur
+              <i class="fas fa-plus-circle"></i>Ajouter un formatteur
             </div>
           </div>
         </div>
@@ -196,178 +151,22 @@
     </div>
   </div>
 </div>
-<div
-  class="modal fade"
-  id="modifyModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modify current user</h5>
-        <button
-          class="close"
-          type="button"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <form
-        method="POST"
-        action=""
-        enctype="multipart/form-data"
-        id="update-form"
-      >
-        {{ form.hidden_tag() }}
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="content-section">
-              <div class="media">
-                <img
-                  class="rounded-circle account-img col-4"
-                  id="img-profile"
-                  src="{{image_file}}"
-                />
-                <div class="media-body col-8">
-                  <h2 class="account-heading" id="update-username">HI</h2>
-                  <p class="text-secondary" id="update-email"></p>
-                </div>
-              </div>
+{% with form=update_form %} {% include 'modals/modify_modal.html' %} {% endwith
+%} {% with form=add_form %} {% include 'modals/add_modal.html' %} {% endwith %}
+{% with form=delete_form %} {% include 'modals/delete_modal.html' %} {% endwith
+%} {% include 'modals/flashes_modal.html' %}
 
-              <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Account Info</legend>
-                <div class="form-group">
-                  {{ form.username.label(class="form-control-label") }} {% if
-                  form.username.errors %} {{ form.username(class="form-control
-                  form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.username.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% else %} {{ form.username(class="form-control
-                  form-control-lg") }} {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.email.label(class="form-control-label") }} {% if
-                  form.email.errors %} {{ form.email(class="form-control
-                  form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.email.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% else %} {{ form.email(class="form-control form-control-lg")
-                  }} {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.password.label(class="form-control-label") }} {% if
-                  form.password.errors %} {{ form.password(class="form-control
-                  form-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.password.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% else %} {{ form.password(class="form-control
-                  form-control-lg") }} {% endif %}
-                </div>
-              </fieldset>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancel
-          </button>
-          {{ form.submit(class="btn btn-primary") }}
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="deleteModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete this user</h5>
-        <button
-          class="close"
-          type="button"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this user ?
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">
-          Cancel
-        </button>
-        <a class="btn btn-primary" href="/logout">Delete</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="addModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete this user</h5>
-        <button
-          class="close"
-          type="button"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Add a new user :
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">
-          Cancel
-        </button>
-        <a class="btn btn-primary" href="/logout">Confirm</a>
-      </div>
-    </div>
-  </div>
-</div>
 <script>
-  $(document).on("click", ".user", function () {
+  $(document).on("click", ".form-modif", function () {
     let username = $(this).data("username");
     let email = $(this).data("email");
     let img_path = $(this).data("img_path");
+    let user_type = $(this).data("usertype");
     img_path = "2e32b4c96a8d8f10.jpg";
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/add_users", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    let data = JSON.stringify({ username: username });
-    xhr.send(data);
+    $(".this_user").attr("value", username);
+    console.log(username);
+    console.log($(".this_user").value);
+
     /*img =({
         {
           url_for("static", (filename = "profile_pics/" + img_path));
@@ -377,7 +176,10 @@
       "image_file",
       img_path
     );
-    console.log(img_path);
+
+    if (user_type == 1) $("#addModalLabel").html("Ajouter un formatteur");
+    $(".acc_rights").attr("value", user_type);
+
     $(".modal-body .media #img-profile").attr("src", img);
     $(".modal-body .media #update-username").html(username);
     $(".modal-body .media #update-email").html(email);
@@ -386,6 +188,10 @@
     // As pointed out in comments,
     // it is unnecessary to have to manually call the modal.
     // $('#addBookDialog').modal('show');
+  });
+
+  $(document).ready(function () {
+    if ($("#flashes-on").length) $("#flashes").modal("show");
   });
 </script>
 {% endblock %}

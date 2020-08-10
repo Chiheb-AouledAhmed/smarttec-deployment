@@ -1,0 +1,93 @@
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add a new user</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form
+        method="POST"
+        action="{{ url_for('users.add_user', default_url='main.add_users' ) }}"
+        enctype="multipart/form-data"
+        id="add-form"
+      >
+        <div class="modal-body">
+          {{ form.csrf_token(id="add_csrf") }} {{
+          form.acc_rights(class="acc_rights") }}
+          <fieldset class="form-group">
+            <div class="form-group">
+              {{ form.username.label(class="form-control-label",
+              id="add_username") }} {% if form.username.errors %} {{
+              form.username(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %} {{ form.username(class="form-control form-control-lg")
+              }} {% endif %}
+            </div>
+            <div class="form-group">
+              {{ form.email.label(class="form-control-label",id="add_email") }}
+              {% if form.email.errors %} {{ form.email(class="form-control
+              form-control-lg is-invalid",id="add_email") }}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %} {{ form.email(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
+            <div class="form-group">
+              {{
+              form.password.label(class="form-control-label",id="add_password")
+              }} {% if form.password.errors %} {{
+              form.password(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %} {{ form.password(class="form-control form-control-lg")
+              }} {% endif %}
+            </div>
+            <div class="form-group">
+              {{ form.confirm_password.label(class="form-control-label") }} {%
+              if form.confirm_password.errors %} {{
+              form.confirm_password(class="form-control form-control-lg
+              is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %} {{ form.confirm_password(class="form-control
+              form-control-lg") }} {% endif %}
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          {{ form.submit(class="btn btn-primary",value="Add") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
