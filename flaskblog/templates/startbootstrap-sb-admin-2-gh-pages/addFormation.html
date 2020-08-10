@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      {% include 'Topbar.html' %}
+      <div class="container-fluid">
+        <div class="content-section">
+          {% from 'macros/form.html' import render_field %}
+          <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <dl>
+              {{ render_field(form.titel,class="form-control-label") }} {{
+              render_field(form.content,class="form-control-label") }}
+            </dl>
+            <div class="form-group">
+              {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

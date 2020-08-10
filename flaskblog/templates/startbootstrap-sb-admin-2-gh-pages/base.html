@@ -51,7 +51,12 @@
   </head>
 
   <body id="page-top">
-    {%block content %}{% endblock %}
+    {%block content %}{% endblock %} {% include 'modals/flashes_modal.html' %}
+    <script>
+      $(document).ready(function () {
+        if ($("#flashes-on").length) $("#flashes").modal("show");
+      });
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

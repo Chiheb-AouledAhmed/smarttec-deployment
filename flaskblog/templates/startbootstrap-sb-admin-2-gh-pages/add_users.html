@@ -48,7 +48,7 @@
           >
             <div class="col-sm-12 course-section">
               <div class="section-title">
-                Liste des utlisateurs
+                Liste des formatteurs
               </div>
               <ul class="section-list">
                 {% for user in form_users %}
@@ -188,10 +188,6 @@
     // As pointed out in comments,
     // it is unnecessary to have to manually call the modal.
     // $('#addBookDialog').modal('show');
-  });
-
-  $(document).ready(function () {
-    if ($("#flashes-on").length) $("#flashes").modal("show");
   });
 </script>
 {% endblock %}

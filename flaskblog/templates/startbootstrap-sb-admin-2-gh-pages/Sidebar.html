@@ -20,7 +20,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-      <a class="nav-link" href="/index">
+      <a class="nav-link" href="/home">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a
       >
@@ -48,12 +48,6 @@
         <span>Mes Formations</span></a
       >
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/account">
-        <i class="far fa-user-circle"></i>
-        <span>Mon Profile</span></a
-      >
-    </li>
     {% elif current_user.acc_rights==0 %}
     <li class="nav-item">
       <a class="nav-link" href="/add_users">
@@ -62,6 +56,12 @@
       >
     </li>
     {% endif %}
+    <li class="nav-item">
+      <a class="nav-link" href="/account">
+        <i class="far fa-user-circle"></i>
+        <span>Mon Profile</span></a
+      >
+    </li>
     <hr class="sidebar-divider" />
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
