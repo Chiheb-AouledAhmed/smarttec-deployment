@@ -163,7 +163,7 @@
           <div class="dropdown-list-image mr-3">
             <img
               class="rounded-circle"
-              src="https://source.unsplash.com/fn_BT9fwg_E/60x60"
+              src="{{url_for('static',filename='profile_pics/' +current_user.image_file)}}"
               alt=""
             />
             <div class="status-indicator bg-success"></div>
@@ -251,7 +251,7 @@
         >
         <img
           class="img-profile rounded-circle"
-          src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+          src="{{url_for('static',filename='profile_pics/' +current_user.image_file)}}"
         />
       </a>
       <!-- Dropdown - User Information -->

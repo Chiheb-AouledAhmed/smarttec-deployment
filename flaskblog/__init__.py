@@ -18,7 +18,6 @@ def create_app(config_class=Config):
     app = Flask(
         __name__, template_folder="templates/startbootstrap-sb-admin-2-gh-pages")
     app.config.from_object(Config)
-
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
@@ -29,7 +28,7 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.transactions.routes import trans
     from flaskblog.errors.handlers import errors
-    from flaskblog.models import User
+    from flaskblog.models import User, Post, Subscription
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
@@ -37,13 +36,14 @@ def create_app(config_class=Config):
     app.register_blueprint(trans)
 
     with app.app_context():
-        """
+
+        db.drop_all()
         db.create_all()
         pwd = bcrypt.generate_password_hash(
             "admin123").decode('utf-8')
-        admin_user = User(username="chihebadmin",
+        admin_user = User(username="admin",
                           email="adminadmin@admin.com", password=pwd, acc_rights=0)
         db.session.add(admin_user)
         db.session.commit()
-        """
+
     return app

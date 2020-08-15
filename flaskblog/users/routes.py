@@ -161,6 +161,15 @@ def delete_user(default_url):
     return redirect(url_for(default_url))
 
 
+@users.route("/infos")
+def infos():
+    if not(current_user.is_authenticated):
+        flash('Login to access this page', 'danger')
+        return redirect(url_for('main.home'))
+    form = InfoForm()
+    return render_template('infos_perso.html', form=form)
+
+
 @users.route("/modify/<default_url>", methods=['GET', 'POST'])
 def modify_user(default_url):
     update_form = UpdateAccountForm()

@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      {% include 'Topbar.html' %}
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-4"
+        ></div>
+        <div class="col-sm-12 course-section">
+          <div class="section-title">
+            Mes formations
+          </div>
+          <ul class="section-list">
+            {% for post in posts %}
+            <li class="section-item">
+              <a class="item" href="post/{{post.id}}">
+                <span class="lecture-icon">
+                  <i class="fa fa-youtube-play"></i>
+                </span>
+                <div class="float-left">
+                  {{post.title}}
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

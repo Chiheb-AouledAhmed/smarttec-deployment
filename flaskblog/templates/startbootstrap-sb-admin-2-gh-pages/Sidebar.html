@@ -35,7 +35,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    {% if current_user.acc_rights==2 %}
+    {%if current_user.is_authenticated %} {% if current_user.acc_rights==2 %}
     <li class="nav-item">
       <a class="nav-link" href="/">
         <i class="fas fa-shopping-cart"></i>
@@ -51,8 +51,21 @@
     {% elif current_user.acc_rights==0 %}
     <li class="nav-item">
       <a class="nav-link" href="/add_users">
-        <i class="far fa-user-circle"></i>
+        <i class="fas fa-users-cog"></i>
         <span>Ajouter des utilisateurs</span></a
+      >
+    </li>
+    {% endif %} {% if current_user.acc_rights!=2 %}
+    <li class="nav-item">
+      <a class="nav-link" href="/post/new">
+        <i class="far fa-plus-square"></i>
+        <span>Ajouter une formation</span></a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/formations">
+        <i class="fas fa-archive"></i>
+        <span>Mes formations</span></a
       >
     </li>
     {% endif %}
@@ -62,6 +75,13 @@
         <span>Mon Profile</span></a
       >
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/infos">
+        <i class="far fa-address-book"></i>
+        <span>Mes informations</span></a
+      >
+    </li>
+    {% endif %}
     <hr class="sidebar-divider" />
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

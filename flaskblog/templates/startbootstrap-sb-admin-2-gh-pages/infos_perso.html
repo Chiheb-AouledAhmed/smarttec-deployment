@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block content %}
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      {% include 'Topbar.html' %}
+      <div class="container-fluid">
+        <div class="content-section">
+          {% from 'macros/form.html' import render_field %}
+          <form method="POST" action="" enctype="multipart/form-data">
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">
+                Mes informations personnelles
+              </legend>
+              {{ form.csrf_token() }}
+              <div>
+                {{render_field(form.Nom)}} {{render_field(form.Prenom)}}
+                {{render_field(form.Sexe)}} {{render_field(form.Num_tel)}}
+                {{render_field(form.Pays)}} {{render_field(form.Niv_etude)}}
+                {{render_field(form.Mode_de_paiement)}}
+              </div>
+            </fieldset>
+            <div class="form-group">
+              {{ form.submit(class="btn btn-primary") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

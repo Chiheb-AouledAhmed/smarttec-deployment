@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from flaskblog.models import User
@@ -96,3 +96,18 @@ class ResetPasswordForm(FlaskForm):
 class DeleteAccountForm(FlaskForm):
     this_user = HiddenField('this_user')
     submit = SubmitField('Delete')
+
+
+class InfoForm(FlaskForm):
+    Nom = StringField('Nom', validators=[DataRequired()])
+    Prenom = StringField('Prénom', validators=[DataRequired()])
+    Sexe = SelectField('Sexe', choices=[
+                       ('male', 'Male'), ('female', 'Female')])
+    Num_tel = StringField('Numéro de téléphone/ WhatsApp',
+                          validators=[DataRequired()])
+    Pays = StringField('Pays', validators=[DataRequired()])
+    Niv_etude = StringField('Niveau d''étude / profession',
+                            validators=[DataRequired()])
+    Mode_de_paiement = SelectField('Mode de paiement', choices=[
+        ('MoneyGram', 'MoneyGram'), ('Western Union', 'Western Union'), ('Virement Bancaire', 'Virement Bancaire'), ('Paypal', 'Paypal')])
+    submit = SubmitField('Submit')

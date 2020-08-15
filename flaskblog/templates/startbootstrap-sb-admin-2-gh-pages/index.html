@@ -14,8 +14,10 @@
         <h1>Dashboard</h1>
         <div class="container-fluid content-row">
           <div class="row mt-1">
+            {% for post in posts %}
             <div
               class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
+              style="height: 500px;"
             >
               <div class="card h-100">
                 <img
@@ -29,448 +31,41 @@
                     <div class="row">
                       <img
                         class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
+                        src="{{url_for('static',filename='profile_pics/' +post.author.image_file)}}"
+                        
                       />
                       <span
                         class="text-gray-600 small float-right col-8"
                         style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
+                        >{{post.author.username}}
                       </span>
                     </div>
                   </h3>
-                  <div class="h-50">
+                  <div style="height: 65%;">
                     <h1 class="card-text">
-                      Formation : Alogrithmes
+                      <B>Formation</B>: {{post.title}}
                     </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                      
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row ">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card h-100">
-                <img
-                  class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar.png')}}"
-                      />
-                      <span
-                        class="text-gray-600 small float-right col-8"
-                        style="font-size: 16px; font-size: 2.5vm;"
-                        >Chiheb Aouled Ahmed Ben Ali
-                      </span>
-                    </div>
-                  </h3>
-                  <div class="h-50 ">
-                    <h1 class="card-text">
-                      Formation : Alogrithmes
-                    </h1>
-                    <p class="card-text">
-                      Description :</br>
-                      Vous allez apprendre Beaucoup de Choses ! Inscrivez-vous
-                      !!
-                    </p>
-                  </div>
-                  <div
-                    class="row btn-block align-self-end mx-auto"
-                    style="height: 25%;"
-                  >
-                    <button href="#" class="btn btn-primary float-left">
-                      S'inscrire
-                    </button>
-                    <button href="#" class="btn btn-primary float-right">
-                      <i class="far fa-eye"></i>Voir
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12  d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card">
-                <img
-                  class="card-img-top d-flex flex-column"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="max-width: 100%; max-height: 100%;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/avatar2.png')}}"
-                      />
-                      <span
-                        class="d-none d-lg-inline text-gray-600 small float-right col-8"
-                        >Chiheb</span
-                      >
-                    </div>
-                  </h3>
-                  <div>
-                    <p class="card-text">
-                      Formation : Alogrithmes
-                    </p>
-                    <p class="card-text">
-                      Vous allez apprendre dans cette formation les différents
-                      techniques de programmation
-                    </p>
+                    <h2 class="card-text">
+                      <B>Starts at :</B> :</br>
+                      {{post.start_date}}
+                    </h2>
+                    <h2 class="card-text">
+                      <B>Description</B> :</br>
+                      {{post.content}}
+                    </h2>
                   </div>
                   <div class="row btn-block align-self-end mx-auto">
-                    <button href="#" class="btn btn-primary float-left">
+                    <button href="#" class="btn btn-primary btn-sm float-left">
                       S'inscrire
                     </button>
-                    <button href="#" class="btn btn-primary float-right">
+                    <button href="#" class="btn btn-primary btn-sm float-right">
                       <i class="far fa-eye"></i>Voir
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12  d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card">
-                <img
-                  class="card-img-top d-flex flex-column"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="width: 230px; height: 180px;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="{{url_for('static',filename='img/unnamed.png')}}"
-                      />
-                      <span
-                        class="d-none d-lg-inline text-gray-600 small float-right col-8"
-                        >Chiheb</span
-                      >
-                    </div>
-                  </h3>
-                  <p class="card-text">
-                    Formation : Alogrithmes
-                  </p>
-                  <p class="card-text">
-                    Vous allez apprendre dans cette formation les différents
-                    techniques de programmation
-                  </p>
-                  <a
-                    href="#"
-                    class="align-self-end btn btn-lg btn-block btn-primary"
-                    >S'inscrire</a
-                  >
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12  d-flex flex-column align-items-stretch mt-1"
-            >
-              <div class="card">
-                <img
-                  class="card-img-top d-flex flex-column"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
-                  alt="Card image cap"
-                  style="width: 230px; height: 180px;"
-                />
-                <div class="card-body">
-                  <h3 class="card-title">
-                    <div class="row">
-                      <img
-                        class="img-profile rounded-circle col-4"
-                        src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
-                      />
-                      <span
-                        class="d-none d-lg-inline text-gray-600 small float-right col-8"
-                        >Chiheb</span
-                      >
-                    </div>
-                  </h3>
-                  <p class="card-text">
-                    Formation : Alogrithmes
-                  </p>
-                  <p class="card-text">
-                    Vous allez apprendre dans cette formation les différents
-                    techniques de programmation
-                  </p>
-                  <a
-                    href="#"
-                    class="align-self-end btn btn-lg btn-block btn-primary"
-                    >S'inscrire</a
-                  >
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>

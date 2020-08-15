@@ -8,13 +8,16 @@
         <div class="content-section">
           {% from 'macros/form.html' import render_field %}
           <form method="POST" action="" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <dl>
-              {{ render_field(form.titel,class="form-control-label") }} {{
-              render_field(form.content,class="form-control-label") }}
-            </dl>
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Ajouter une formation</legend>
+              {{ form.csrf_token() }}
+              <div>
+                {{ render_field(form.title) }} {{ render_field(form.content) }}
+                {{render_field(form.date)}}{{render_field(form.zoom_link)}}
+              </div>
+            </fieldset>
             <div class="form-group">
-              {{ form.submit(class="btn btn-outline-info") }}
+              {{ form.submit(class="btn btn-primary") }}
             </div>
           </form>
         </div>

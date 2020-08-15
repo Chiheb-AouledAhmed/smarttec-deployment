@@ -140,10 +140,10 @@
               class="btn btn-primary btn-sm float-right lecture-start"
               data-toggle="modal"
               data-target="#addModal"
-              data-usertype="1"
+              data-usertype="2"
               type="button"
             >
-              <i class="fas fa-plus-circle"></i>Ajouter un formatteur
+              <i class="fas fa-plus-circle"></i>Ajouter un utilisateur
             </div>
           </div>
         </div>
@@ -162,6 +162,7 @@
     let email = $(this).data("email");
     let img_path = $(this).data("img_path");
     let user_type = $(this).data("usertype");
+    console.log(user_type);
     img_path = "2e32b4c96a8d8f10.jpg";
     $(".this_user").attr("value", username);
     console.log(username);

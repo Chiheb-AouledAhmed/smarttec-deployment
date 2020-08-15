@@ -14,11 +14,16 @@ def home():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(
         Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('home.html', posts=posts)
     """
-    if(current_user.is_authenticated):
-        print(current_user.acc_rights)
-    return render_template('index.html', title="Home Page", cur_user=current_user)
+    posts = Post.query.order_by(
+        Post.date_posted.desc()).all()
+    return render_template('index.html', title="Home Page", cur_user=current_user, posts=posts)
+
+
+@main.route("/formations")
+def formation():
+    posts = current_user.posts
+    return render_template('formatteurs.html', title='About', posts=posts)
 
 
 @main.route("/about")
