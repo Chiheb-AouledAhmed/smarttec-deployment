@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
     subscriptions = db.relationship(
         'Subscription', backref='subscribed', lazy=True)
+    infos = db.relationship(
+        'Userinfo', backref='currentuser', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -75,6 +77,9 @@ class Subscription(db.Model):
 class Sceance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     num = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     session_id = db.Column(
         db.Integer, db.ForeignKey('post.id'), nullable=False)
     documents = db.relationship('Document', backref='sceance.id', lazy=True)
@@ -97,12 +102,14 @@ class Document(db.Model):
 
 class Userinfo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Nom = db.Column(db.String(30), nullable=False)
-    Prenom = db.Column(db.String(30), nullable=False)
-    Sexe = db.Column(db.String(20), nullable=False)
-    Num_tel = db.Column(db.String(20), nullable=False)
-    Pays = db.Column(db.String(20), nullable=False)
-    Niv_etude = db.Column(db.String(20), nullable=False)
+    Nom = db.Column(db.String(30), nullable=True)
+    Prenom = db.Column(db.String(30), nullable=True)
+    Sexe = db.Column(db.String(20), nullable=True)
+    Num_tel = db.Column(db.String(20), nullable=True)
+    Pays = db.Column(db.String(20), nullable=True)
+    Niv_etude = db.Column(db.String(20), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id'), nullable=False)
 
     def __repr__(self):
         return f"Userinfo('{self.Nom}', '{self.Prenom}')"

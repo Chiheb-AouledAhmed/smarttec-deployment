@@ -2,8 +2,8 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskblog import db
-from flaskblog.models import Post
-from flaskblog.posts.forms import PostForm
+from flaskblog.models import *
+from flaskblog.posts.forms import *
 
 posts = Blueprint('posts', __name__)
 
@@ -20,6 +20,11 @@ def new_post():
         post = Post(title=form.title.data,
                     content=form.content.data, author=current_user, start_date=form.date.data, zoom_link=form.zoom_link.data)
         db.session.add(post)
+        db.session.commit()
+        for i in range(1, 7):
+            sceance = Sceance(title=form.title.data +
+                              "-Sceance "+str(i), session_id=post.id, start_date=form.date.data, num=i)
+            db.session.add(sceance)
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('main.home'))
@@ -46,6 +51,12 @@ def post(post_id):
                 flash(((', '.join(errors))), 'danger')
             return redirect(url_for('posts.post', post_id=post.id))
     return render_template('formation.html', title=post.title, post=post, form=form)
+
+
+@posts.route("/post/<int:post_id>/<int:sceance_id>", methods=['GET', 'POST'])
+def sceance(post_id, sceance_id):
+    form = SceanceForm()
+    return render_template('sceance.html', form=form)
 
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])

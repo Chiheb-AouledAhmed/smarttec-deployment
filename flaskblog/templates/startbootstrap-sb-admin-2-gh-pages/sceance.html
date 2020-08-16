@@ -1,0 +1,163 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      {% include 'Topbar.html' %}
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-4"
+        ></div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#sc1"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Modifer les informations</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#sc2"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >Liste des documents</a
+            >
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="sc1"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="content-section">
+              {% from 'macros/form.html' import render_field %}
+              <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset class="form-group">
+                  {{ form.csrf_token() }}
+                  <div>
+                    {{ render_field(form.title) }} {{ render_field(form.content)
+                    }} {{render_field(form.date)}}{{ render_field(form.document)
+                    }}
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  {{ form.submit(class="btn btn-primary") }}
+                </div>
+              </form>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="sc2"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="col-sm-12 course-section">
+              <div class="section-title">
+                Séance N° 1
+              </div>
+              <ul class="section-list">
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">
+                      Document 1
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Aperçu <i class="far fa-eye"></i>
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Télécharger <i class="fas fa-download"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">
+                      Document 2
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Aperçu <i class="far fa-eye"></i>
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Télécharger <i class="fas fa-download"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">Document 3</div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Aperçu <i class="far fa-eye"></i>
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Télécharger <i class="fas fa-download"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-file-text"></i>
+                    </span>
+                    <div class="float-left">Document 4</div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Aperçu <i class="far fa-eye"></i>
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Télécharger <i class="fas fa-download"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">Document 5</div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Aperçu <i class="far fa-eye"></i>
+                    </div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Télécharger <i class="fas fa-download"></i>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

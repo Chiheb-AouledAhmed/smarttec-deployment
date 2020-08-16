@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskblog import db, bcrypt
-from flaskblog.models import User, Post
+from flaskblog.models import *
 from flaskblog.users.forms import *
 from flaskblog.users.utils import save_picture, send_reset_email
 
@@ -161,13 +161,32 @@ def delete_user(default_url):
     return redirect(url_for(default_url))
 
 
-@users.route("/infos")
+@users.route("/infos", methods=['GET', 'POST'])
 def infos():
     if not(current_user.is_authenticated):
         flash('Login to access this page', 'danger')
         return redirect(url_for('main.home'))
+    userinfo = current_user.infos
     form = InfoForm()
-    return render_template('infos_perso.html', form=form)
+    if(request.method == 'POST'):
+        if(form.validate_on_submit):
+            if(len(userinfo)):
+                userinfo[0].Nom = form.Nom.data
+                userinfo[0].user_id = current_user.id
+                userinfo[0].Prenom = form.Prenom.data
+                userinfo[0].Sexe = form.Sexe.data
+                userinfo[0].Num_tel = form.Num_tel.data
+                userinfo[0].Pays = form.Pays.data
+                userinfo[0].Niv_etude = form.Niv_etude.data
+            else:
+                userinfo = Userinfo(Nom=form.Nom.data, user_id=current_user.id,
+                                    Prenom=form.Prenom.data, Sexe=form.Sexe.data,
+                                    Num_tel=form.Num_tel.data, Pays=form.Pays.data, Niv_etude=form.Niv_etude.data)
+                db.session.add(userinfo)
+            db.session.commit()
+            flash('sucessfully updated user info', 'success')
+            return redirect(url_for('main.home'))
+    return render_template('infos_perso.html', form=form, userinfo=userinfo)
 
 
 @users.route("/modify/<default_url>", methods=['GET', 'POST'])
