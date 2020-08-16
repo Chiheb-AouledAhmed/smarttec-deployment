@@ -78,6 +78,7 @@ class Sceance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     num = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=True)
     start_date = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
     session_id = db.Column(

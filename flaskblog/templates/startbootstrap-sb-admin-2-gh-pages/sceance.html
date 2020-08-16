@@ -52,9 +52,10 @@
                 <fieldset class="form-group">
                   {{ form.csrf_token() }}
                   <div>
-                    {{ render_field(form.title) }} {{ render_field(form.content)
-                    }} {{render_field(form.date)}}{{ render_field(form.document)
-                    }}
+                    {{ render_field(form.title,value=sceance.title) }} {{
+                    render_field(form.content,id="content_form") }}
+                    {{render_field(form.date,value=sceance.date)}}{{
+                    render_field(form.document) }}
                   </div>
                 </fieldset>
                 <div class="form-group">
@@ -74,14 +75,16 @@
                 Séance N° 1
               </div>
               <ul class="section-list">
+                {% for document in documents %}
                 <li class="section-item">
-                  <a class="item" href="#">
+                  <a
+                    class="item"
+                    href="{{url_for('static',filename='uploaded_documents/'+document)}}"
+                  >
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
+                    <div class="float-left">{{document}}</div>
                     <div class="btn-primary btn-sm float-right lecture-start">
                       Aperçu <i class="far fa-eye"></i>
                     </div>
@@ -90,68 +93,7 @@
                     </div>
                   </a>
                 </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -160,4 +102,11 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $("#content_form").val("{{sceance.content}}");
+    let date = new Date("{{sceance.start_date}}").toISOString();
+    $("#date").val(date.substring(0, date.length - 8));
+  });
+</script>
 {% endblock %}
