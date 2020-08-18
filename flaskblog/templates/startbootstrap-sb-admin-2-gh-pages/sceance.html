@@ -104,6 +104,7 @@
 </div>
 <script>
   $(document).ready(function () {
+    console.log("{{sceance.content}}");
     $("#content_form").val("{{sceance.content}}");
     let date = new Date("{{sceance.start_date}}").toISOString();
     $("#date").val(date.substring(0, date.length - 8));

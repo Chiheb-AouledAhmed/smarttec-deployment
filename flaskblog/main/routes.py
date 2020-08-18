@@ -1,4 +1,5 @@
 import hashlib
+import json
 from flask import render_template, request, Blueprint, url_for, abort, redirect
 from flaskblog.models import Post, User
 from flaskblog import db, bcrypt
@@ -23,7 +24,16 @@ def home():
 @main.route("/formations")
 def formation():
     posts = current_user.posts
-    return render_template('formatteurs.html', title='About', posts=posts)
+    return render_template('formatteurs.html', title='Mes formations', posts=posts)
+
+
+@main.route("/calendar")
+def calendar():
+    events = [{'title': post.title, 'start': post.start_date.isoformat(), 'url': url_for('posts.preview', post_id=post.id)}
+              for post in Post.query.all()]
+    eventsjson = json.dumps(events)
+
+    return render_template('calendar.html', events=eventsjson)
 
 
 @main.route("/about")

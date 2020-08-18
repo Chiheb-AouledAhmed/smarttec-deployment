@@ -17,12 +17,12 @@
             {% for post in posts %}
             <div
               class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 d-flex flex-column align-items-stretch mt-1"
-              style="height: 500px;"
+              style="height: 600px;"
             >
               <div class="card h-100">
                 <img
                   class="card-img-top"
-                  src="https://source.unsplash.com/KYx1AAaoQ34/800x600"
+                  src="https://e-smarttec.com/wp-content/uploads/2020/04/t%C3%A9l%C3%A9chargement.png"
                   alt="Card image cap"
                   style="max-width: 100%; max-height: 100%;"
                 />
@@ -51,14 +51,14 @@
                     </h2>
                     <h2 class="card-text">
                       <B>Description</B> :</br>
-                      {{post.content}}
+                      {{post.description}}
                     </h2>
                   </div>
                   <div class="row btn-block align-self-end mx-auto">
                     <button href="#" class="btn btn-primary btn-sm float-left">
                       S'inscrire
                     </button>
-                    <button href="#" class="btn btn-primary btn-sm float-right">
+                    <button onclick="window.location.href='/formation_preview/{{post.id}}'" class="btn btn-primary btn-sm float-right">
                       <i class="far fa-eye"></i>Voir
                     </button>
                   </div>

@@ -12,8 +12,11 @@
               <legend class="border-bottom mb-4">Ajouter une formation</legend>
               {{ form.csrf_token() }}
               <div>
-                {{ render_field(form.title) }} {{ render_field(form.content) }}
-                {{render_field(form.date)}}{{render_field(form.zoom_link)}}
+                {{ render_field(form.title) }} {{ render_field(form.description)
+                }}{{ render_field(form.content) }}
+                {{render_field(form.date)}}{{render_field(form.zoom_link)}} {{
+                render_field(form.youtube_url) }}{{ render_field(form.price)
+                }}{{render_field(form.num_posts)}}
               </div>
             </fieldset>
             <div class="form-group">

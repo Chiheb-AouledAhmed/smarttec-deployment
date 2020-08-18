@@ -77,9 +77,11 @@
                   {{ form.csrf_token() }}
                   <div>
                     {{ render_field(form.title,value=post.title) }} {{
-                    render_field(form.content,id="content_form",val=post.content)
-                    }}
-                    {{render_field(form.date,id="date_form",val=post.start_date)}}{{render_field(form.zoom_link,value=post.zoom_link)}}
+                    render_field(form.content,id="content_form") }}
+                    {{render_field(form.description)}}
+                    {{render_field(form.date,id="date_form")}}{{render_field(form.zoom_link,value=post.zoom_link)}}
+                    {{ render_field(form.youtube_url,value=post.youtube_url)
+                    }}{{ render_field(form.price,value=post.price) }}
                   </div>
                 </fieldset>
                 <div class="form-group">
@@ -95,7 +97,11 @@
 </div>
 <script>
   $(document).ready(function () {
-    $("#content_form").val("{{post.content|safe}}");
+    let post = {{post.content.split('\n')|safe}};
+    console.log(post);
+    $("#content_form").val(post.join('\n'));
+    let description ={{post.description.split('\n')|safe}};
+    $("#description").val(description.join('\n'));
     let date = new Date("{{post.start_date}}").toISOString();
     console.log(date.substring(0, date.length - 5));
     $("#date_form").val(date.substring(0, date.length - 8));

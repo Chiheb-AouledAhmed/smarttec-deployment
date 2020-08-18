@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      {% include 'Topbar.html' %}
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div id="calendar"></div>
+        <!-- /. wrap -->
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+      },
+      initialDate: Date.now().toISOString,
+      navLinks: true, // can click day/week names to navigate views
+      businessHours: false, // display business hours
+      editable: false,
+      selectable: true,
+      events: {{events| safe}},
+    });
+
+    calendar.render();
+  });
+</script>
+{% endblock %}

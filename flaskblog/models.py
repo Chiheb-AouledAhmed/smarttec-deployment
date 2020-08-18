@@ -44,9 +44,13 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    youtube_url = db.Column(db.String(200), nullable=True)
+    num_posts = db.Column(db.Integer, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
     zoom_link = db.Column(db.String(200))
