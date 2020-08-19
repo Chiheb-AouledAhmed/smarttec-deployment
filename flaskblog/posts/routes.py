@@ -22,7 +22,7 @@ def new_post():
                     description=form.description.data, num_posts=form.num_posts.data)
         db.session.add(post)
         db.session.commit()
-        for i in range(1, form.num_posts.data):
+        for i in range(1, form.num_posts.data+1):
             sceance = Sceance(title=form.title.data +
                               "-Sceance "+str(i), session_id=post.id, start_date=form.date.data, num=i, content="")
             db.session.add(sceance)
