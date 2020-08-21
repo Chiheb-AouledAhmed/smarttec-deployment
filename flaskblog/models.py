@@ -56,6 +56,7 @@ class Post(db.Model):
     zoom_link = db.Column(db.String(200))
     theme = db.Column(db.String(20), default="theme 1")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    images = db.relationship('PostImage', backref='post', lazy=True)
     subscriptions = db.relationship(
         'Subscription', backref='subscribers', lazy=True)
     sceances = db.relationship(
@@ -73,6 +74,7 @@ class Subscription(db.Model):
     Certif_ref = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    payment_method = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         return f"Subscription('{self.id}', '{self.date_posted}')"
@@ -87,7 +89,7 @@ class Sceance(db.Model):
                            default=datetime.utcnow)
     session_id = db.Column(
         db.Integer, db.ForeignKey('post.id'), nullable=False)
-    documents = db.relationship('Document', backref='sceance.id', lazy=True)
+    documents = db.relationship('Document', backref='sceance.id', lazy=False)
 
     def __repr__(self):
         return f"Sceance('{self.id}', '{self.num}')"
@@ -103,6 +105,16 @@ class Document(db.Model):
 
     def __repr__(self):
         return f"Document('{self.id}', '{self.url}')"
+
+
+class PostImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(200), nullable=False)
+    ima_post = db.Column(db.Integer, db.ForeignKey(
+        'post.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Image('{self.id}', '{self.url}')"
 
 
 class Userinfo(db.Model):

@@ -1,4 +1,4 @@
-
+import PIL
 import os
 import secrets
 from PIL import Image
@@ -17,3 +17,13 @@ def save_document(form_document):
     form_document.save(document_path)
 
     return document_fn
+
+
+def save_picture(form_picture):
+    picture_fn = secure_filename(form_picture.filename)
+    picture_path = os.path.join(
+        current_app.root_path, 'static/sceances_pics', picture_fn)
+
+    img = Image.open(form_picture)
+    img.save(picture_path)
+    return picture_fn

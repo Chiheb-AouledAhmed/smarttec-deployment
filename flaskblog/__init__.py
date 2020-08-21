@@ -28,7 +28,7 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.transactions.routes import trans
     from flaskblog.errors.handlers import errors
-    from flaskblog.models import User, Post, Subscription
+    from flaskblog.models import User, Post, Subscription, Sceance, PostImage, Document, Userinfo
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
@@ -36,7 +36,7 @@ def create_app(config_class=Config):
     app.register_blueprint(trans)
 
     with app.app_context():
-        """
+
         db.drop_all()
         db.create_all()
         pwd = bcrypt.generate_password_hash(
@@ -45,5 +45,5 @@ def create_app(config_class=Config):
                           email="adminadmin@admin.com", password=pwd, acc_rights=0)
         db.session.add(admin_user)
         db.session.commit()
-        """
+
     return app

@@ -1,0 +1,47 @@
+<div
+  class="modal fade"
+  id="paymentModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Insrivez-vous !!</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form
+        method="POST"
+        action="{{url_for('posts.subscription',user_id=current_user.id,post_id=post.id)}}"
+        enctype="multipart/form-data"
+        id="delete-form"
+      >
+        {{form.hidden_tag()}}
+        <div class="modal-body">
+          <div class="alert alert-warning" role="alert">
+            Vous avez 7 jours pour payer la formation.<br />Veuillez contacater
+            w.mansour@e-smarttec.com après le choix de la méthode de paiement.
+          </div>
+          Choisissez votre méthode de paiement :<br />
+          {{form.mode_de_paiement(class="form-control form-control-lg") }}
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+
+          {{ form.submit(class="btn btn-primary",value="Subscribe") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

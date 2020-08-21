@@ -86,9 +86,6 @@
                     </span>
                     <div class="float-left">{{document}}</div>
                     <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
                       Télécharger <i class="fas fa-download"></i>
                     </div>
                   </a>
@@ -102,10 +99,11 @@
     </div>
   </div>
 </div>
+
 <script>
   $(document).ready(function () {
-    console.log("{{sceance.content}}");
-    $("#content_form").val("{{sceance.content}}");
+    let post = {{sceance.content.split('\n')|safe}};
+    $("#content_form").val(post.join('\n'));
     let date = new Date("{{sceance.start_date}}").toISOString();
     $("#date").val(date.substring(0, date.length - 8));
   });
