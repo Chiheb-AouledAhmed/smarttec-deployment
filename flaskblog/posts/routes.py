@@ -1,3 +1,4 @@
+import operator
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
@@ -102,7 +103,13 @@ def delete_image():
 def preview(post_id):
     post = Post.query.get(post_id)
     form = PaymentMethodForm()
-    sceances = post.sceances
+    pre_sceances = post.sceances
+    sceances = []
+    for i in range(1, post.num_posts+1):
+        for sc in pre_sceances:
+            if(sc.num == i):
+                sceances.append(sc)
+                break
     return render_template('formation_preview.html', post=post, sceances=sceances, form=form)
 
 
