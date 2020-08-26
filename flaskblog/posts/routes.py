@@ -84,6 +84,12 @@ def subscribe(post_id):
     return render_template('formation_inscri.html', post=post)
 
 
+@ posts.route("/search")
+def search():
+
+    return render_template('search.html')
+
+
 @posts.route("/delete_image", methods=['GET', 'POST'])
 def delete_image():
     form = DeleteImageForm()

@@ -19,6 +19,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
+      {% if current_user.is_authenticated%}
       <form
         method="POST"
         action="{{url_for('posts.subscription',user_id=current_user.id,post_id=post.id)}}"
@@ -42,6 +43,18 @@
           {{ form.submit(class="btn btn-primary",value="Subscribe") }}
         </div>
       </form>
+      {% else %}
+      <div class="modal-body">
+        <div class="alert alert-warning" role="alert">
+          Créer un nouveau Compte ou connectez-vous pour continuer la procédure
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
