@@ -31,6 +31,7 @@ class SceanceForm(FlaskForm):
         'Date de début de formation', format='%Y-%m-%d'+'T'+'%H:%M')
     document = FileField('Ajouter un document', validators=[
         FileAllowed(['pdf', 'doc', 'docx', 'pptx', 'ppt', 'xlsx', 'csv'])])
+    zoom_video = StringField('Lien de la vidéo zoom')
     submit = SubmitField('Mettre à jour')
 
 

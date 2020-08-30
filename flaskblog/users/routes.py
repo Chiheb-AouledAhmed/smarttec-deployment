@@ -50,8 +50,18 @@ def logout():
 
 @ users.route("/mesformations")
 @ login_required
-def mesformations():
-    return render_template('mesFormations.html', current_user=current_user)
+def mesformations_catalogue():
+    post_ids = [sub.post_id for sub in Subscription.query.filter_by(
+        user_id=current_user.id)]
+    posts = [Post.query.get(post_id) for post_id in post_ids]
+    return render_template('mesFormations_catalogue.html', posts=posts)
+
+
+@ users.route("/mesformations/<int:post_id>")
+@ login_required
+def mesformations(post_id):
+    post = Post.query.get(post_id)
+    return render_template('mesFormations.html', current_user=current_user, post=post)
 
 
 @ users.route("/account", methods=['GET', 'POST'])

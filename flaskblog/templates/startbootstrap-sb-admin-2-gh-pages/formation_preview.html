@@ -35,9 +35,7 @@
 
         <h3>Description :</h3>
         <hr />
-        <p>
-          {{post.content}}
-        </p>
+        <p>{{post.content}}</p>
         <div
           id="carouselExampleIndicators"
           class="carousel slide"
@@ -101,7 +99,7 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
-          <div class="col-sm-12 course-section" style="margin-top: 100px;">
+          <div class="col-sm-12 course-section" style="margin-top: 100px">
             <div class="section-title">
               Formation en ligne (live webinar) des responsables HSE
             </div>
@@ -121,17 +119,17 @@
             </ul>
           </div>
           {% for sceance in sceances %}
-          <h3 id="sc{{sceance.num}}" style="margin-top: 50px;">
+          <h3 id="sc{{sceance.num}}" style="margin-top: 50px">
             Sceance {{sceance.num}} : {{sceance.title}}
           </h3>
           <hr />
           <p>{{sceance.content}}</p>
           {% endfor %}
 
-          <div class="card-deck text-center" style="margin-bottom: 50px;">
+          <div class="card-deck text-center" style="margin-bottom: 50px">
             <div
               class="card"
-              style="max-width: 40%; margin-left: auto; margin-right: auto;"
+              style="max-width: 40%; margin-left: auto; margin-right: auto"
             >
               <div class="card-header">
                 <h5 class="my-0">Acheter le produit</h5>
@@ -163,5 +161,13 @@
     </div>
   </div>
 </div>
-{% with form=form %} {% include 'modals/payment_modal.html' %} {% endwith %} {%
-endblock %}
+{% with form=form %} {% include 'modals/payment_modal.html' %} {% endwith %}
+<script>
+  $(document).ready(function () {
+    $("#flashes").on("hidden.bs.modal", function () {
+      if({{active}})
+      $("#paymentModal").modal("show");
+    });
+  });
+</script>
+{% endblock %}

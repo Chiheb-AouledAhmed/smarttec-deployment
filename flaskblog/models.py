@@ -89,6 +89,7 @@ class Sceance(db.Model):
                            default=datetime.utcnow)
     session_id = db.Column(
         db.Integer, db.ForeignKey('post.id'), nullable=False)
+    zoom_video = db.Column(db.String(200), nullable=True)
     documents = db.relationship('Document', backref='sceance.id', lazy=False)
 
     def __repr__(self):

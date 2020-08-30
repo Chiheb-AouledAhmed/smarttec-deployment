@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <!-- Page Heading -->
 
-        <h1>Dashboard</h1>
+        <h1>Mes Formations</h1>
         <div class="container-fluid content-row">
           <div class="row mt-1">
             {% for post in posts %}
@@ -55,7 +55,7 @@
                     </h2>
                   </div>
                   <div class="align-self-end mx-auto">
-                    <button onclick="window.location.href='/formation_preview/{{post.id}}'" class="btn btn-block btn-primary btn-sm">
+                    <button onclick="window.location.href='/mesformations/{{post.id}}'" class="btn btn-block btn-primary btn-sm">
                       <i class="far fa-eye"></i>Voir
                     </button>
                   </div>

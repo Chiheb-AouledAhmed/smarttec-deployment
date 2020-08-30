@@ -1,10 +1,11 @@
 import operator
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
-from flask_login import current_user, login_required
-from flaskblog import db
+from flask_login import login_user, current_user, logout_user, login_required
+from flaskblog import db, bcrypt
 from flaskblog.models import *
 from flaskblog.posts.forms import *
+from flaskblog.users.forms import *
 from flaskblog.posts.utils import *
 posts = Blueprint('posts', __name__)
 
@@ -105,10 +106,13 @@ def delete_image():
     return redirect(url_for('posts.post', post_id=post_id))
 
 
-@ posts.route("/formation_preview/<int:post_id>")
-def preview(post_id):
+@ posts.route("/formation_preview/<int:post_id>",  methods=['GET', 'POST'], defaults={'active': False})
+@ posts.route("/formation_preview/<int:post_id>/<int:active>", methods=['GET', 'POST'])
+def preview(post_id, active):
     post = Post.query.get(post_id)
     form = PaymentMethodForm()
+    register_form = RegistrationForm()
+    login_form = LoginForm()
     pre_sceances = post.sceances
     sceances = []
     for i in range(1, post.num_posts+1):
@@ -116,7 +120,29 @@ def preview(post_id):
             if(sc.num == i):
                 sceances.append(sc)
                 break
-    return render_template('formation_preview.html', post=post, sceances=sceances, form=form)
+    if register_form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(
+            register_form.password.data).decode('utf-8')
+        user = User(username=register_form.username.data,
+                    email=register_form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(
+            'Votre compte a été créée et vous êtes inscris dans cette formation', 'success')
+        login_user(user, remember=login_form.remember.data)
+        return redirect(url_for('posts.preview', post_id=post_id, active=True))
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(email=login_form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, login_form.password.data):
+            login_user(user, remember=login_form.remember.data)
+            next_page = request.args.get('next')
+            flash(
+                'Vous êtes inscris dans cette formation', 'success')
+            return redirect(next_page) if next_page else redirect(url_for('posts.preview', post_id=post_id, active=True))
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
+    return render_template('formation_preview.html', post=post, sceances=sceances, form=form,
+                           register_form=register_form, login_form=login_form, active=active)
 
 
 @ posts.route("/subscription/<int:user_id>/<int:post_id>", methods=['GET', 'POST'])
@@ -152,6 +178,7 @@ def sceance(post_id, sceance_id):
         sceance.title = form.title.data
         sceance.content = form.content.data
         sceance.date = form.date.data
+        sceance.zoom_video = form.zoom_video.data
         db.session.commit()
         flash('La sceance a été mise à jour!', 'success')
         return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))

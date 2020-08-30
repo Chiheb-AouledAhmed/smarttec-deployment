@@ -48,13 +48,164 @@
         <div class="alert alert-warning" role="alert">
           Créer un nouveau Compte ou connectez-vous pour continuer la procédure
         </div>
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-4"
+        ></div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#connexion"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Connexion</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#inscription"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >Inscription</a
+            >
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="connexion"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <form method="POST" action="">
+              {{ login_form.hidden_tag() }}
+              <fieldset class="form-group">
+                <div class="form-group">
+                  {{ login_form.email.label(class="form-control-label") }} {% if
+                  login_form.email.errors %} {{
+                  login_form.email(class="form-control form-control-user
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in login_form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ login_form.email(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+                <div class="form-group">
+                  {{ login_form.password.label(class="form-control-label") }} {%
+                  if login_form.password.errors %} {{
+                  login_form.password(class="form-control form-control-user
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in login_form.password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ login_form.password(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+                <div class="form-check">
+                  {{ login_form.remember(class="form-check-input") }} {{
+                  login_form.remember.label(class="form-check-label") }}
+                </div>
+              </fieldset>
+              <div class="form-group">
+                {{ login_form.submit(class="btn btn-outline-info") }}
+                <small class="text-muted ml-2">
+                  <a href="{{ url_for('users.reset_request') }}"
+                    >Forgot Password?</a
+                  >
+                </small>
+              </div>
+            </form>
+          </div>
+          <div
+            class="tab-pane fade show"
+            id="inscription"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <form method="POST" action="">
+              {{ register_form.hidden_tag() }}
+              <fieldset class="form-group">
+                <div class="form-group">
+                  {{ register_form.username.label(class="form-control-label") }}
+                  {% if register_form.username.errors %} {{
+                  register_form.username(class="form-control form-control-user
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in register_form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ register_form.username(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+                <div class="form-group">
+                  {{ register_form.email.label(class="form-control-label") }} {%
+                  if register_form.email.errors %} {{
+                  register_form.email(class="form-control form-control-user
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in register_form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ register_form.email(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+                <div class="form-group">
+                  {{ register_form.password.label(class="form-control-label") }}
+                  {% if register_form.password.errors %} {{
+                  register_form.password(class="form-control form-control-user
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in register_form.password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ register_form.password(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+                <div class="form-group">
+                  {{
+                  register_form.confirm_password.label(class="form-control-label")
+                  }} {% if register_form.confirm_password.errors %} {{
+                  register_form.confirm_password(class="form-control
+                  form-control-user is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in register_form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{
+                  register_form.confirm_password(class="form-control
+                  form-control-user") }} {% endif %}
+                </div>
+              </fieldset>
+              <div class="form-group">
+                {{ register_form.submit(class="btn btn-outline-info") }}
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+        {% endif %}
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">
-          Close
-        </button>
-      </div>
-      {% endif %}
     </div>
   </div>
 </div>

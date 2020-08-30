@@ -55,7 +55,8 @@
                     {{ render_field(form.title,value=sceance.title) }} {{
                     render_field(form.content,id="content_form") }}
                     {{render_field(form.date,value=sceance.date)}}{{
-                    render_field(form.document) }}
+                    render_field(form.document)
+                    }}{{render_field(form.zoom_video,value=sceance.zoom_video)}}
                   </div>
                 </fieldset>
                 <div class="form-group">
@@ -71,11 +72,21 @@
             aria-labelledby="home-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 1
-              </div>
+              <div class="section-title">Séance N° 1</div>
               <ul class="section-list">
-                {% for document in documents %}
+                {% if sceance.zoom_video %}
+                <li class="section-item">
+                  <a class="item" href="{{sceance.zoom_video}}">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">Vidéo de la Sceance</div>
+                    <div class="btn-primary btn-sm float-right lecture-start">
+                      Regarder <i class="fas fa-eye"></i>
+                    </div>
+                  </a>
+                </li>
+                {% endif %} {% for document in documents %}
                 <li class="section-item">
                   <a
                     class="item"

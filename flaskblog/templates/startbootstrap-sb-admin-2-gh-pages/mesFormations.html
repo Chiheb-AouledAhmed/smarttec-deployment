@@ -10,636 +10,66 @@
       <!-- Begin Page Content -->
       <div class="container-fluid">
         <!-- Page Heading -->
+        <h1>{{post.title}}</h1>
+        <p>Lien de la Session Zoom :</p>
+        <a href="{{post.zoom_link}}">{{post.zoom_link}}</a>
         <div
           class="d-sm-flex align-items-center justify-content-between mb-4"
         ></div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+          {% for sc in post.sceances %}
           <li class="nav-item">
             <a
+              {% if sc.num==1 %}
               class="nav-link active"
+              {% else %}
+              class="nav-link"
+              {% endif %}
               id="home-tab"
               data-toggle="tab"
-              href="#sc1"
+              href="#sc{{sc.id}}"
               role="tab"
               aria-controls="home"
               aria-selected="true"
-              >Scéance 1</a
+              >{{sc.title}}</a
             >
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="profile-tab"
-              data-toggle="tab"
-              href="#sc2"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="false"
-              >Scéance 2</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="contact-tab"
-              data-toggle="tab"
-              href="#sc3"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
-              >Scéance 3</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="contact-tab"
-              data-toggle="tab"
-              href="#sc4"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
-              >Scéance 4</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="contact-tab"
-              data-toggle="tab"
-              href="#sc5"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
-              >Scéance 5</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="contact-tab"
-              data-toggle="tab"
-              href="#sc6"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
-              >Scéance 6</a
-            >
-          </li>
+          {% endfor %}
         </ul>
         <div class="tab-content" id="myTabContent">
+          {% for sc in post.sceances %}
           <div
+            {% if sc.num==1 %}
             class="tab-pane fade show active"
-            id="sc1"
+            {% else %}
+            class="tab-pane fade show"
+            {% endif %}
+            id="sc{{sc.id}}"
             role="tabpanel"
             aria-labelledby="home-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 1
-              </div>
+              <div class="section-title">{{sc.title}}</div>
               <ul class="section-list">
+                {% for doc in sc.documents %}
                 <li class="section-item">
                   <a class="item" href="#">
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
+                    <div class="float-left">{{doc.url}}</div>
+                    <button class="btn-primary btn-sm float-right lecture-start" onclick="window.location.href='{{url_for('static',filename='uploaded_documents/'+document)}}'">
                       Télécharger <i class="fas fa-download"></i>
-                    </div>
+                    </button>
                   </a>
                 </li>
+                {% endfor %}
 
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
+                
               </ul>
             </div>
           </div>
-          <div
-            class="tab-pane fade"
-            id="sc2"
-            role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
-            <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 2
-              </div>
-              <ul class="section-list">
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="sc3"
-            role="tabpanel"
-            aria-labelledby="contact-tab"
-          >
-            <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 3
-              </div>
-              <ul class="section-list">
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="sc4"
-            role="tabpanel"
-            aria-labelledby="contact-tab"
-          >
-            <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 4
-              </div>
-              <ul class="section-list">
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="sc5"
-            role="tabpanel"
-            aria-labelledby="contact-tab"
-          >
-            <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 5
-              </div>
-              <ul class="section-list">
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="sc6"
-            role="tabpanel"
-            aria-labelledby="contact-tab"
-          >
-            <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 6
-              </div>
-              <ul class="section-list">
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 1
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">
-                      Document 2
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 3</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-file-text"></i>
-                    </span>
-                    <div class="float-left">Document 4</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="section-item">
-                  <a class="item" href="#">
-                    <span class="lecture-icon">
-                      <i class="fa fa-youtube-play"></i>
-                    </span>
-                    <div class="float-left">Document 5</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Aperçu <i class="far fa-eye"></i>
-                    </div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
-                      Télécharger <i class="fas fa-download"></i>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          {% endfor %}  
         </div>
       </div>
     </div>
