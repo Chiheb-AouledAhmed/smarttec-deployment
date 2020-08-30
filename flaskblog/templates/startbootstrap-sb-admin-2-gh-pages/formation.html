@@ -71,9 +71,7 @@
             aria-labelledby="home-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                {{post.title}}
-              </div>
+              <div class="section-title">{{post.title}}</div>
               <ul class="section-list">
                 {% for i in range(1,post.num_posts+1) %}
                 <li class="section-item">
@@ -123,9 +121,7 @@
             aria-labelledby="home-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 1
-              </div>
+              <div class="section-title">Séance N° 1</div>
               <ul class="section-list">
                 {% for image in post.images %}
                 <li class="section-item">
@@ -164,9 +160,7 @@
             aria-labelledby="home-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Séance N° 1
-              </div>
+              <div class="section-title">Séance N° 1</div>
               <ul class="section-list">
                 {% for user,date,method in users %}
                 <li class="section-item">
@@ -175,6 +169,11 @@
                       <i class="fa fa-youtube-play"></i>
                     </span>
                     <div class="float-left">{{user.username}}</div>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                    >
+                      Ajouter un certificat
+                    </div>
                     <div
                       class="btn-primary btn-sm float-right lecture-start form-modif"
                       data-toggle="modal"

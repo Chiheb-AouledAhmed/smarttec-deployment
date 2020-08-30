@@ -87,7 +87,6 @@ def subscribe(post_id):
 
 @ posts.route("/search")
 def search():
-
     return render_template('search.html')
 
 

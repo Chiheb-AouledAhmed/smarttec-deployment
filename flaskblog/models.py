@@ -72,6 +72,8 @@ class Subscription(db.Model):
                             default=datetime.utcnow)
     Test_score = db.Column(db.Integer)
     Certif_ref = db.Column(db.Integer)
+    date_certf = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     payment_method = db.Column(db.String(20), nullable=False)
