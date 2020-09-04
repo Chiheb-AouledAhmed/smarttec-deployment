@@ -40,6 +40,20 @@ class DeleteImageForm(FlaskForm):
     submit = SubmitField('Mettre à jour')
 
 
+class CertificateForm(FlaskForm):
+    cert_id = HiddenField("cert_id")
+    ref = StringField('Référence du certificat',
+                      validators=[DataRequired()])
+    score = IntegerField('Score',
+                         validators=[DataRequired()])
+    submit = SubmitField('Chercher le certificat')
+
+
+class SubForm(FlaskForm):
+    sub_id = HiddenField("sub_id")
+    submit = SubmitField()
+
+
 class PaymentMethodForm(FlaskForm):
     mode_de_paiement = SelectField('Mode de paiement', choices=[
         ('MoneyGram', 'MoneyGram'), ('Western Union', 'Western Union'), ('Virement Bancaire', 'Virement Bancaire'), ('Paypal', 'Paypal')])

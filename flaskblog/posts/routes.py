@@ -35,14 +35,31 @@ def new_post():
                            form=form, legend='New Post')
 
 
+@posts.route("/delete_sub", methods=['GET', 'POST'])
+def delete_sub():
+    subform = SubForm()
+    sub_id = subform.sub_id.data
+    sub = Subscription.query.get(sub_id)
+    post_id = sub.post_id
+    if(sub):
+        flash('L''abonnement a été désactivé avec succès', 'success')
+    else:
+        flash('opération échouée', 'warning')
+    db.session.delete(sub)
+    db.session.commit()
+    return redirect(url_for('posts.post', post_id=post_id))
+
+
 @posts.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     form = PostForm()
+    subform = SubForm()
     delete_form = DeleteImageForm()
+    certif_form = CertificateForm()
     post = Post.query.get_or_404(post_id)
     subs = Subscription.query.filter_by(
         post_id=post_id).all()
-    users = [(User.query.get(sub.user_id), sub.date_posted,
+    users = [(sub.id, User.query.get(sub.user_id), sub.date_posted,
               sub.payment_method) for sub in subs]
     if(request.method == "POST"):
         if form.validate_on_submit():
@@ -76,7 +93,7 @@ def post(post_id):
             for field, errors in form.errors.items():
                 flash(((', '.join(errors))), 'danger')
             return redirect(url_for('posts.post', post_id=post.id))
-    return render_template('formation.html', title=post.title, post=post, form=form, delete_form=delete_form, users=users)
+    return render_template('formation.html', title=post.title, post=post, form=form, delete_form=delete_form, users=users, certif_form=certif_form, subform=subform)
 
 
 @ posts.route("/subscribe/<int:post_id>")
@@ -85,9 +102,43 @@ def subscribe(post_id):
     return render_template('formation_inscri.html', post=post)
 
 
-@ posts.route("/search")
+@ posts.route("/search", methods=['GET', 'POST'])
 def search():
-    return render_template('search.html')
+    form = CertificateForm()
+    certifs = []
+    for sub in Subscription.query.filter(Subscription.Certif_ref != None).all():
+        certif = {"ref": "", "nom": "", "prenom": "",
+                  "post": "", "date": "", "score": ""}
+        certif['ref'] = sub.Certif_ref
+        user = Userinfo.query.filter_by(user_id=sub.user_id).first()
+        if(user):
+            certif['nom'] = user.Nom
+            certif['prenom'] = user.Prenom
+        certif['post'] = Post.query.get(sub.post_id).title
+        certif['date'] = sub.date_certf
+        certif['score'] = sub.Test_score
+        certifs.append(certif)
+    result = None
+    if((form.validate_on_submit) and (request.method == 'POST')):
+        print(form.ref.data)
+        sub = Subscription.query.filter_by(
+            Certif_ref=form.ref.data).first()
+        print(sub)
+        if(sub):
+            certif = {"ref": "", "nom": "", "prenom": "",
+                      "post": "", "date": "", "score": ""}
+            certif['ref'] = sub.Certif_ref
+            user = Userinfo.query.filter_by(user_id=sub.user_id).first()
+            if(user):
+                certif['nom'] = user.Nom
+                certif['prenom'] = user.Prenom
+            certif['post'] = Post.query.get(sub.post_id).title
+            certif['date'] = sub.date_certf
+            certif['score'] = sub.Test_score
+            result = certif
+        else:
+            result = "Ce certificat n'existe pas"
+    return render_template('search.html', form=form, certifs=certifs, result=result)
 
 
 @posts.route("/delete_image", methods=['GET', 'POST'])
@@ -105,6 +156,18 @@ def delete_image():
     return redirect(url_for('posts.post', post_id=post_id))
 
 
+@posts.route('/new_infos/<int:post_id>', methods=['GET', 'POST'])
+def newinfo(post_id):
+    form = InfoForm()
+    if(form.validate_on_submit):
+        userinfo = Userinfo(Nom=form.Nom.data, Prenom=form.Prenom.data, Sexe=form.Sexe.data,
+                            Num_tel=form.Num_tel.data, Pays=form.Pays.data, Niv_etude=form.Niv_etude.data, user_id=current_user.id)
+        db.session.add(userinfo)
+        db.session.commit()
+        flash('Vos informations sont sauvegardés avec succès', 'success')
+    return redirect(url_for('posts.preview', post_id=post_id))
+
+
 @ posts.route("/formation_preview/<int:post_id>",  methods=['GET', 'POST'], defaults={'active': False})
 @ posts.route("/formation_preview/<int:post_id>/<int:active>", methods=['GET', 'POST'])
 def preview(post_id, active):
@@ -112,8 +175,14 @@ def preview(post_id, active):
     form = PaymentMethodForm()
     register_form = RegistrationForm()
     login_form = LoginForm()
+    info_form = InfoForm()
     pre_sceances = post.sceances
     sceances = []
+    if(current_user.is_authenticated) and ((len(current_user.infos))):
+        active = 0
+    else:
+        active = 1
+    print(active)
     for i in range(1, post.num_posts+1):
         for sc in pre_sceances:
             if(sc.num == i):
@@ -141,7 +210,7 @@ def preview(post_id, active):
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('formation_preview.html', post=post, sceances=sceances, form=form,
-                           register_form=register_form, login_form=login_form, active=active)
+                           register_form=register_form, login_form=login_form, active=active, info_form=info_form)
 
 
 @ posts.route("/subscription/<int:user_id>/<int:post_id>", methods=['GET', 'POST'])
@@ -155,6 +224,23 @@ def subscription(user_id, post_id):
         db.session.commit()
         flash('votre inscription a été réussite', 'success')
     return redirect(url_for('main.home'))
+
+
+@ posts.route("/certif", methods=['GET', 'POST'])
+def certif():
+    form = CertificateForm()
+    if(form.validate_on_submit):
+        ref = form.ref.data
+        score = form.score.data
+        id = form.cert_id.data
+        print(id)
+        sub = Subscription.query.get(id)
+        sub.Certif_ref = ref
+        sub.Test_score = score
+        sub.date_certf = datetime.utcnow()
+        db.session.commit()
+        flash('Certificat ajoutée avec succès', 'success')
+    return redirect(url_for('posts.post', post_id=sub.post_id))
 
 
 @ posts.route("/post/<int:post_id>/<int:sceance_id>", methods=['GET', 'POST'])

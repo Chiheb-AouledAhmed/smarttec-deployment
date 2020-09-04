@@ -1,0 +1,48 @@
+<div
+  class="modal fade"
+  id="certifModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Ajouter un ceritificat
+        </h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      {% from 'macros/form.html' import render_field %}
+      <form
+        method="POST"
+        action="{{url_for('posts.certif')}}"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <fieldset class="form-group">
+            {{ form.csrf_token() }} {{ form.cert_id() }}
+            <div>
+              {{ render_field(form.ref) }}{{ render_field(form.score) }}
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          {{ form.submit(class="btn btn-primary",value="Ajouter un certificat")
+          }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

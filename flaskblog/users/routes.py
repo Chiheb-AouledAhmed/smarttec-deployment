@@ -64,6 +64,17 @@ def mesformations(post_id):
     return render_template('mesFormations.html', current_user=current_user, post=post)
 
 
+@ users.route("/profile/<int:user_id>", methods=['GET', 'POST'])
+@ login_required
+def profile(user_id):
+    user = User.query.get(user_id)
+    if(len(user.infos)):
+        userinfo = user.infos[0]
+    else:   
+        userinfo = None
+    return render_template('profile.html', user=user, userinfo=userinfo)
+
+
 @ users.route("/account", methods=['GET', 'POST'])
 @ login_required
 def account():

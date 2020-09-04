@@ -1,0 +1,61 @@
+<div
+  class="modal fade"
+  id="userinfoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Ajouter un ceritificat
+        </h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      {% from 'macros/form.html' import render_field %}
+      <form
+        method="POST"
+        action="{{url_for('posts.newinfo',post_id=post.id)}}"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+              Mes informations personnelles
+            </legend>
+            {{ form.csrf_token() }}
+            <div>
+              {% if not(userinfo) %} {{render_field(form.Nom)}}
+              {{render_field(form.Prenom)}} {{render_field(form.Sexe)}}
+              {{render_field(form.Num_tel)}} {{render_field(form.Pays)}}
+              {{render_field(form.Niv_etude)}} {% else %}
+              {{render_field(form.Nom,value=userinfo[0].Nom)}}
+              {{render_field(form.Prenom,value=userinfo[0].Prenom)}}
+              {{render_field(form.Sexe,value=userinfo[0].Sexe)}}
+              {{render_field(form.Num_tel,value=userinfo[0].Num_tel)}}
+              {{render_field(form.Pays,value=userinfo[0].Pays)}}
+              {{render_field(form.Niv_etude,value=userinfo[0].Niv_etude)}}{%
+              endif %}
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          {{ form.submit(class="btn btn-primary",value="Ajouter un certificat")
+          }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

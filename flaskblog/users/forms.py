@@ -108,6 +108,4 @@ class InfoForm(FlaskForm):
     Pays = StringField('Pays', validators=[DataRequired()])
     Niv_etude = StringField('Niveau d''étude / profession',
                             validators=[DataRequired()])
-    Mode_de_paiement = SelectField('Mode de paiement', choices=[
-        ('MoneyGram', 'MoneyGram'), ('Western Union', 'Western Union'), ('Virement Bancaire', 'Virement Bancaire'), ('Paypal', 'Paypal')])
     submit = SubmitField('Submit')

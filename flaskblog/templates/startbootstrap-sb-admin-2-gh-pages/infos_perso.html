@@ -17,8 +17,7 @@
                 {% if not(userinfo) %} {{render_field(form.Nom)}}
                 {{render_field(form.Prenom)}} {{render_field(form.Sexe)}}
                 {{render_field(form.Num_tel)}} {{render_field(form.Pays)}}
-                {{render_field(form.Niv_etude)}}
-                {{render_field(form.Mode_de_paiement)}} {% else %}
+                {{render_field(form.Niv_etude)}} {% else %}
                 {{render_field(form.Nom,value=userinfo[0].Nom)}}
                 {{render_field(form.Prenom,value=userinfo[0].Prenom)}}
                 {{render_field(form.Sexe,value=userinfo[0].Sexe)}}

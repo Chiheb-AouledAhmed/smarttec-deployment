@@ -146,6 +146,7 @@
                 </ul>
                 <a
                   href="#"
+                  id="pay_btn"
                   class="btn btn-block btn-primary"
                   data-toggle="modal"
                   data-target="#paymentModal"
@@ -161,13 +162,26 @@
     </div>
   </div>
 </div>
-{% with form=form %} {% include 'modals/payment_modal.html' %} {% endwith %}
+{% with form=form %} {% include 'modals/payment_modal.html' %} {% endwith %} {%
+with form=info_form %} {% include 'modals/userinfo_modal.html' %} {% endwith %}
 <script>
   $(document).ready(function () {
-    $("#flashes").on("hidden.bs.modal", function () {
-      if({{active}})
-      $("#paymentModal").modal("show");
+    $("#pay_btn").attr("data-target","#userinfoModal");
+    {% if not(current_user.is_authenticated)%}
+        $("#pay_btn").attr("data-target","#paymentModal");
+    {% elif( (current_user) and (not(current_user.infos))) %}
+        $("#pay_btn").attr("data-target","#userinfoModal");
+        $("#flashes").on("hidden.bs.modal", function () {
+        $("#userinfoModal").modal("show");
+        console.log('done');
     });
+    {% elif current_user %}
+    $("#pay_btn").attr("data-target","#paymentModal");
+    $("#flashes").on("hidden.bs.modal", function () {
+        $("#paymentModal").modal("show");
+        console.log('done');
+    });
+    {% endif %}
   });
 </script>
 {% endblock %}
