@@ -10,7 +10,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          Ajouter un ceritificat
+          Mes informations personnelles
         </h5>
         <button
           class="close"
@@ -29,9 +29,6 @@
       >
         <div class="modal-body">
           <fieldset class="form-group">
-            <legend class="border-bottom mb-4">
-              Mes informations personnelles
-            </legend>
             {{ form.csrf_token() }}
             <div>
               {% if not(userinfo) %} {{render_field(form.Nom)}}
