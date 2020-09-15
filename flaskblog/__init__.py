@@ -36,7 +36,8 @@ def create_app(config_class=Config):
     app.register_blueprint(trans)
 
     with app.app_context():
-        """
+        #db.alter_column('subscription', 'date_certf', nullable=False,new_column_name='date_certif')
+
         db.drop_all()
         db.create_all()
         pwd = bcrypt.generate_password_hash(
@@ -45,5 +46,5 @@ def create_app(config_class=Config):
                           email="adminadmin@admin.com", password=pwd, acc_rights=0)
         db.session.add(admin_user)
         db.session.commit()
-        """
+
     return app

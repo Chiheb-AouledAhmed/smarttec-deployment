@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+<div id="wrapper">
+  {% include 'Sidebar.html' %}
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      {% include 'Topbar.html' %}
+      <div class="container-fluid">
+        <div class="content-section">
+          {% from 'macros/form.html' import render_field %}
+          <form
+            method="POST"
+            action="{{url_for('posts.add_user')}}"
+            enctype="multipart/form-data"
+          >
+            <div class="modal-body">
+              {{ form.csrf_token() }}
+              <div>{{render_field(form.file)}}</div>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-secondary"
+                type="button"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              {{ form.submit(class="btn btn-primary") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

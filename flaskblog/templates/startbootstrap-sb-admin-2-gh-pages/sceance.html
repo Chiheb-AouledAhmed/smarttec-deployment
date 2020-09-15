@@ -88,10 +88,7 @@
                 </li>
                 {% endif %} {% for document in documents %}
                 <li class="section-item">
-                  <a
-                    class="item"
-                    href="{{url_for('static',filename='uploaded_documents/'+document)}}"
-                  >
+                  <a class="item" href="{{document}}">
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>

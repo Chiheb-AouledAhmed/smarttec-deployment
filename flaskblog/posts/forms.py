@@ -19,8 +19,8 @@ class PostForm(FlaskForm):
     date = DateTimeLocalField(
         'Date de début de formation', format='%Y-%m-%d'+'T'+'%H:%M')
     zoom_link = StringField('Zoom link', validators=[DataRequired()])
-    images = FileField('Images de la description de la scéance (Max: 3 par Scéance)', validators=[
-        FileAllowed(['jpg', 'png'])])
+    images = StringField(
+        'Images de la description de la scéance (Max: 3 par Scéance)')
     submit = SubmitField('Post')
 
 
@@ -38,6 +38,11 @@ class SceanceForm(FlaskForm):
 class DeleteImageForm(FlaskForm):
     image_id = HiddenField("image_id")
     submit = SubmitField('Mettre à jour')
+
+
+class FileForm(FlaskForm):
+    file = StringField('Ajouter le lien du fichier')
+    submit = SubmitField('Post')
 
 
 class CertificateForm(FlaskForm):

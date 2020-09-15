@@ -64,7 +64,7 @@ def post(post_id):
     if(request.method == "POST"):
         if form.validate_on_submit():
             if(form.images.data):
-                image_file = save_picture(form.images.data)
+                image_file = form.images.data
                 print(image_file)
                 cur_image = PostImage(url=image_file, ima_post=post.id)
                 db.session.add(cur_image)
@@ -115,7 +115,7 @@ def search():
             certif['nom'] = user.Nom
             certif['prenom'] = user.Prenom
         certif['post'] = Post.query.get(sub.post_id).title
-        certif['date'] = sub.date_certf
+        certif['date'] = sub.date_certif
         certif['score'] = sub.Test_score
         certifs.append(certif)
     result = None
@@ -133,7 +133,7 @@ def search():
                 certif['nom'] = user.Nom
                 certif['prenom'] = user.Prenom
             certif['post'] = Post.query.get(sub.post_id).title
-            certif['date'] = sub.date_certf
+            certif['date'] = sub.date_certif
             certif['score'] = sub.Test_score
             result = certif
         else:
@@ -237,7 +237,7 @@ def certif():
         sub = Subscription.query.get(id)
         sub.Certif_ref = ref
         sub.Test_score = score
-        sub.date_certf = datetime.utcnow()
+        sub.date_certif = datetime.utcnow()
         db.session.commit()
         flash('Certificat ajoutée avec succès', 'success')
     return redirect(url_for('posts.post', post_id=sub.post_id))
@@ -254,7 +254,7 @@ def sceance(post_id, sceance_id):
     documents = [doc.url for doc in sceance.documents]
     if form.validate_on_submit():
         if form.document.data:
-            doc_file = save_document(form.document.data)
+            doc_file = form.document.data
             cur_document = Document(
                 start=form.date.data, end=datetime(2070, 1, 1, 23, 59), url=doc_file, sceance=sceance.id)
             db.session.add(cur_document)
@@ -268,6 +268,20 @@ def sceance(post_id, sceance_id):
         flash('La sceance a été mise à jour!', 'success')
         return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))
     return render_template('sceance.html', form=form, sceance=sceance, documents=documents, delete_form=delete_form, post=post)
+
+
+@posts.route('/db_init', methods=['GET', 'POST'])
+def db_init():
+    form = FileForm()
+    return render_template('db_init.html', form=form)
+
+
+@posts.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    form = FileForm()
+    if(form.validate_on_submit):
+        handle_doc(form.file.data)
+    return redirect(url_for('main.home'))
 
 
 @ posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])

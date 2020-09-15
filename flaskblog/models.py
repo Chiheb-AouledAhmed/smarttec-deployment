@@ -68,15 +68,14 @@ class Post(db.Model):
 
 class Subscription(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
     Test_score = db.Column(db.Integer)
     Certif_ref = db.Column(db.Integer)
-    date_certf = db.Column(db.DateTime, nullable=False,
-                           default=datetime.utcnow)
+    date_certif = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     payment_method = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.Integer, default=1)
 
     def __repr__(self):
         return f"Subscription('{self.id}', '{self.date_posted}')"
@@ -100,8 +99,6 @@ class Sceance(db.Model):
 
 class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    start = db.Column(db.DateTime, nullable=False)
-    end = db.Column(db.DateTime, nullable=False)
     url = db.Column(db.String(200), nullable=False)
     sceance = db.Column(db.Integer, db.ForeignKey(
         'sceance.id'), nullable=False)

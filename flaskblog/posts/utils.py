@@ -1,6 +1,7 @@
 import PIL
 import os
 import secrets
+import pandas as pd
 from PIL import Image
 from flask import url_for, current_app
 from flask_mail import Message
@@ -17,6 +18,11 @@ def save_document(form_document):
     form_document.save(document_path)
 
     return document_fn
+
+
+def handle_doc(form_document):
+    df = pd.read_csv(form_document)
+    print(df)
 
 
 def save_picture(form_picture):

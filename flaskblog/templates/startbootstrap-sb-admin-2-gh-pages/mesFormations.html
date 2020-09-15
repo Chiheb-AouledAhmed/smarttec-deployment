@@ -58,7 +58,7 @@
                       <i class="fa fa-youtube-play"></i>
                     </span>
                     <div class="float-left">{{doc.url}}</div>
-                    <button class="btn-primary btn-sm float-right lecture-start" onclick="window.location.href='{{url_for('static',filename='uploaded_documents/'+doc.url)}}'">
+                    <button class="btn-primary btn-sm float-right lecture-start" onclick="window.location.href='{{doc.url}}'">
                       Télécharger <i class="fas fa-download"></i>
                     </button>
                   </a>
