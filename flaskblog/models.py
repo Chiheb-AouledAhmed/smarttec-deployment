@@ -70,6 +70,8 @@ class Subscription(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Test_score = db.Column(db.Integer)
     Certif_ref = db.Column(db.Integer)
+    date_posted = date_certif = db.Column(db.DateTime, nullable=False,
+                                          default=datetime.utcnow)
     date_certif = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
