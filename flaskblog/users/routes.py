@@ -53,6 +53,7 @@ def logout():
 def mesformations_catalogue():
     post_ids = [sub.post_id for sub in Subscription.query.filter_by(
         user_id=current_user.id)]
+
     posts = [Post.query.get(post_id) for post_id in post_ids]
     return render_template('mesFormations_catalogue.html', posts=posts)
 
@@ -63,6 +64,12 @@ def mesformations(post_id):
     post = Post.query.get(post_id)
     subs = Subscription.query.filter_by(user_id=current_user.id).all()
     test = False
+    scs = []
+    for i in range(1, post.num_posts+1):
+        for sc in post.sceances:
+            if(sc.num == i):
+                scs.append(sc)
+                break
     for sub in subs:
         if(sub.post_id == post_id):
             if(sub.status == 1):
@@ -74,7 +81,7 @@ def mesformations(post_id):
         sceances.append((
             (((sc.start_date-datetime.now()) <= timedelta(days=1)) and (test)), sc))
     # print(sceances)
-    return render_template('mesFormations.html', current_user=current_user, post=post, sceances=sceances)
+    return render_template('mesFormations.html', current_user=current_user, post=post, sceances=sceances, scs=scs)
 
 
 @ users.route("/profile/<int:user_id>", methods=['GET', 'POST'])

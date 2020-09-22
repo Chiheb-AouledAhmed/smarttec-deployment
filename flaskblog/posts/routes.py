@@ -178,7 +178,12 @@ def newinfo(post_id):
 @ posts.route("/formation_preview/<int:post_id>",  methods=['GET', 'POST'], defaults={'active': False})
 @ posts.route("/formation_preview/<int:post_id>/<int:active>", methods=['GET', 'POST'])
 def preview(post_id, active):
+    test = False
     post = Post.query.get(post_id)
+    sub = Subscription.query.filter_by(post_id=post_id).all()
+    for sb in sub:
+        if(sb.user_id == current_user.id):
+            test = True
     form = PaymentMethodForm()
     register_form = RegistrationForm()
     login_form = LoginForm()
@@ -217,7 +222,7 @@ def preview(post_id, active):
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('formation_preview.html', post=post, sceances=sceances, form=form,
-                           register_form=register_form, login_form=login_form, active=active, info_form=info_form)
+                           register_form=register_form, login_form=login_form, active=active, info_form=info_form, test=test)
 
 
 @ posts.route("/subscription/<int:user_id>/<int:post_id>", methods=['GET', 'POST'])
