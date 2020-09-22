@@ -21,23 +21,27 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">
-        Est-ce que vous êtes sûrs de désactiver cet abonnement ?
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">
-          Cancel
-        </button>
-        <form
-          method="POST"
-          action="{{url_for('posts.delete_sub' )}}"
-          enctype="multipart/form-data"
-          id="delete-form"
-        >
-          {{ form.csrf_token() }} {{form.sub_id()}}{{ form.submit(class="btn
-          btn-primary",value="Désactiver") }}
-        </form>
-      </div>
+      {% from 'macros/form.html' import render_field %}
+      <form
+        method="POST"
+        action="{{url_for('posts.delete_sub' )}}"
+        enctype="multipart/form-data"
+        id="delete-form"
+      >
+        {{ form.csrf_token() }}
+        <div class="modal-body">
+          Est-ce que vous êtes sûrs de désactiver cet abonnement ? {{
+          form.csrf_token() }} <b>{{ render_field(form.mode) }}</b>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+
+          {{form.sub_id()}}{{ form.submit(class="btn
+          btn-primary",value="Modifier") }}
+        </div>
+      </form>
     </div>
   </div>
 </div>

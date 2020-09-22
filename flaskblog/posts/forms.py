@@ -29,8 +29,7 @@ class SceanceForm(FlaskForm):
     content = TextAreaField('Description', validators=[DataRequired()])
     date = DateTimeLocalField(
         'Date de début de formation', format='%Y-%m-%d'+'T'+'%H:%M')
-    document = FileField('Ajouter un document', validators=[
-        FileAllowed(['pdf', 'doc', 'docx', 'pptx', 'ppt', 'xlsx', 'csv'])])
+    document = StringField('Lien du document')
     zoom_video = StringField('Lien de la vidéo zoom')
     submit = SubmitField('Mettre à jour')
 
@@ -56,6 +55,8 @@ class CertificateForm(FlaskForm):
 
 class SubForm(FlaskForm):
     sub_id = HiddenField("sub_id")
+    mode = SelectField('Type de Désactivation', choices=[
+        ('1', 'Désactivation temporaire'), ('2', 'Désactivation permanente'), ('3', 'Réactivation')])
     submit = SubmitField()
 
 

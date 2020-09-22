@@ -41,12 +41,19 @@ def delete_sub():
     sub_id = subform.sub_id.data
     sub = Subscription.query.get(sub_id)
     post_id = sub.post_id
+    mode = subform.mode.data
+    if(mode == '1'):
+        sub.status = 2
+    elif(mode == '2'):
+        db.session.delete(sub)
+    else:
+        sub.status = 1
+    db.session.commit()
     if(sub):
         flash('L''abonnement a été désactivé avec succès', 'success')
     else:
         flash('opération échouée', 'warning')
-    db.session.delete(sub)
-    db.session.commit()
+
     return redirect(url_for('posts.post', post_id=post_id))
 
 
@@ -256,7 +263,7 @@ def sceance(post_id, sceance_id):
         if form.document.data:
             doc_file = form.document.data
             cur_document = Document(
-                start=form.date.data, end=datetime(2070, 1, 1, 23, 59), url=doc_file, sceance=sceance.id)
+                url=doc_file, sceance=sceance.id)
             db.session.add(cur_document)
             db.session.commit()
 

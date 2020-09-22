@@ -204,7 +204,7 @@
                       data-sub_id="{{id}}"
                       type="button"
                     >
-                      <i class="fas fa-trash-alt"></i>Désactiver l'abonnement
+                      Modifier l'abonnement
                     </div>
                   </a>
                 </li>
@@ -217,10 +217,9 @@
     </div>
   </div>
 </div>
-{% with form=delete_form %} {% include 'modals/delete_pic_modal.html' %} {%
-endwith %} {% include 'modals/info_modal.html' %} {% with form=certif_form %} {%
-include 'modals/add_certificate_modal.html' %} {% endwith %}{% with form=subform
-%} {% include 'modals/subform_modal.html' %} {% endwith %}
+{% include 'modals/info_modal.html' %} {% with form=certif_form %} {% include
+'modals/add_certificate_modal.html' %} {% endwith %}{% with form=subform %} {%
+include 'modals/subform_modal.html' %} {% endwith %}
 <script>
   $(document).on("click", ".form-modif", function () {
     let sub_id=$(this).data("sub_id");

@@ -4,7 +4,7 @@ from flaskblog import db, bcrypt
 from flaskblog.models import *
 from flaskblog.users.forms import *
 from flaskblog.users.utils import save_picture, send_reset_email
-
+from datetime import timedelta
 users = Blueprint('users', __name__)
 
 
@@ -61,7 +61,20 @@ def mesformations_catalogue():
 @ login_required
 def mesformations(post_id):
     post = Post.query.get(post_id)
-    return render_template('mesFormations.html', current_user=current_user, post=post)
+    subs = Subscription.query.filter_by(user_id=current_user.id).all()
+    test = False
+    for sub in subs:
+        if(sub.post_id == post_id):
+            if(sub.status == 1):
+                test = True
+            else:
+                test = False
+    sceances = []
+    for sc in post.sceances:
+        sceances.append((
+            (((sc.start_date-datetime.now()) <= timedelta(days=1)) and (test)), sc))
+    # print(sceances)
+    return render_template('mesFormations.html', current_user=current_user, post=post, sceances=sceances)
 
 
 @ users.route("/profile/<int:user_id>", methods=['GET', 'POST'])
@@ -70,7 +83,7 @@ def profile(user_id):
     user = User.query.get(user_id)
     if(len(user.infos)):
         userinfo = user.infos[0]
-    else:   
+    else:
         userinfo = None
     return render_template('profile.html', user=user, userinfo=userinfo)
 
@@ -101,9 +114,8 @@ def account():
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.date_posted.desc())\
-        .paginate(page=page, per_page=5)
+    posts = Post.query.filter_by(author=user).order_by(
+        Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
 
 
@@ -139,7 +151,7 @@ def reset_token(token):
     return render_template('reset_token.html', title='Reset Password', form=form)
 
 
-@users.route("/add/<default_url>", methods=['GET', 'POST'])
+@ users.route("/add/<default_url>", methods=['GET', 'POST'])
 def add_user(default_url):
     add_form = RegistrationForm()
     if(not(add_form.acc_rights.data)):
@@ -160,7 +172,7 @@ def add_user(default_url):
     return redirect(url_for(default_url))
 
 
-@users.route("/delete/<default_url>", methods=['GET', 'POST'])
+@ users.route("/delete/<default_url>", methods=['GET', 'POST'])
 def delete_user(default_url):
     delete_form = DeleteAccountForm()
     if(delete_form.validate_on_submit()):
@@ -182,7 +194,7 @@ def delete_user(default_url):
     return redirect(url_for(default_url))
 
 
-@users.route("/infos", methods=['GET', 'POST'])
+@ users.route("/infos", methods=['GET', 'POST'])
 def infos():
     if not(current_user.is_authenticated):
         flash('Login to access this page', 'danger')
@@ -210,7 +222,7 @@ def infos():
     return render_template('infos_perso.html', form=form, userinfo=userinfo)
 
 
-@users.route("/modify/<default_url>", methods=['GET', 'POST'])
+@ users.route("/modify/<default_url>", methods=['GET', 'POST'])
 def modify_user(default_url):
     update_form = UpdateAccountForm()
     if(update_form.validate_on_submit()):
