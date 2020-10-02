@@ -36,7 +36,7 @@ def create_app(config_class=Config):
     app.register_blueprint(trans)
 
     with app.app_context():
-        """
+
         db.drop_all()
         db.create_all()
         pwd = bcrypt.generate_password_hash(
@@ -48,5 +48,5 @@ def create_app(config_class=Config):
         db.session.add(default_theme)
         db.session.add(admin_user)
         db.session.commit()
-        """
+
     return app
