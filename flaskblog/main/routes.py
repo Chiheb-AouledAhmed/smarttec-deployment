@@ -29,7 +29,7 @@ def formation():
 
 @main.route("/calendar")
 def calendar():
-    events = [{'title': post.title, 'start': post.start_date.isoformat(), 'url': url_for('posts.preview', post_id=post.id)}
+    events = [{'title': post.title, 'start': post.start_date.isoformat(), 'url': url_for('posts.preview', post_id=post.id), 'color': "#257e4a", 'backgroundColor': '#257e4a'}
               for post in Post.query.all()]
     eventsjson = json.dumps(events)
 

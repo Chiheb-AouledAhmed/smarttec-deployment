@@ -14,6 +14,9 @@ posts = Blueprint('posts', __name__)
 @login_required
 def new_post():
     form = PostForm()
+    themes = Theme.query.all()
+    theme_choices = [(th.id, th.name)for th in themes]
+    form.theme.choices = theme_choices
     if(current_user.acc_rights == 2):
         flash('You don''t have the rights to acces this page ', 'danger')
         return redirect(url_for('main.home'))
@@ -21,7 +24,7 @@ def new_post():
         post = Post(title=form.title.data,
                     content=form.content.data, author=current_user, start_date=form.date.data,
                     zoom_link=form.zoom_link.data, youtube_url=form.youtube_url.data, price=form.price.data,
-                    description=form.description.data, num_posts=form.num_posts.data)
+                    description=form.description.data, num_posts=form.num_posts.data, theme=form.theme.data)
         db.session.add(post)
         db.session.commit()
         for i in range(1, form.num_posts.data+1):
@@ -60,6 +63,9 @@ def delete_sub():
 @posts.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     form = PostForm()
+    themes = Theme.query.all()
+    theme_choices = [(th.id, th.name)for th in themes]
+    form.theme.choices = theme_choices
     subform = SubForm()
     delete_form = DeleteImageForm()
     certif_form = CertificateForm()
@@ -72,7 +78,6 @@ def post(post_id):
         if form.validate_on_submit():
             if(form.images.data):
                 image_file = form.images.data
-                print(image_file)
                 cur_image = PostImage(url=image_file, ima_post=post.id)
                 db.session.add(cur_image)
                 db.session.commit()
@@ -93,7 +98,6 @@ def post(post_id):
                                       session_id=post.id, start_date=post.start_date, num=i, content="")
                     db.session.add(sceance)
             db.session.commit()
-            print(post.sceances)
             flash('Your post has been updated!', 'success')
             return redirect(url_for('posts.post', post_id=post.id))
         else:
@@ -107,6 +111,22 @@ def post(post_id):
 def subscribe(post_id):
     post = Post.query.get(post_id)
     return render_template('formation_inscri.html', post=post)
+
+
+@ posts.route("/theme/new", methods=['GET', 'POST'])
+def theme():
+    form = ThemeForm()
+    update_form = ThemeForm()
+    delete_form = DeleteThemeForm()
+    themes = Theme.query.all()
+    if(request.method == 'POST'):
+        if(form.validate_on_submit):
+            theme = Theme(name=form.name.data, url=form.url.data)
+            db.session.add(theme)
+            flash('Le thème a été ajouté avec succès', 'success')
+            db.session.commit()
+            return redirect(url_for('posts.theme'))
+    return render_template('theme.html', form=form, themes=themes, delete_form=delete_form, update_form=update_form)
 
 
 @ posts.route("/search", methods=['GET', 'POST'])
@@ -152,6 +172,7 @@ def search():
 def delete_image():
     form = DeleteImageForm()
     if(form.validate_on_submit):
+        print(form.image_id.data)
         image = PostImage.query.get(form.image_id.data)
         if(image):
             db.session.delete(image)
@@ -161,6 +182,43 @@ def delete_image():
         else:
             flash("image not found", 'danger')
     return redirect(url_for('posts.post', post_id=post_id))
+
+
+@posts.route("/delete_theme", methods=['GET', 'POST'])
+def delete_theme():
+    form = DeleteThemeForm()
+    if(form.validate_on_submit):
+        print(form.theme_id.data)
+        theme = Theme.query.get(form.theme_id.data)
+        if(theme):
+            for post in theme.theme_posts:
+                post.theme = 1
+            db.session.commit()
+            db.session.delete(theme)
+            db.session.commit()
+            flash("theme successfully deleted", 'success')
+        else:
+            flash("theme not found", 'danger')
+
+    return redirect(url_for('posts.theme'))
+
+
+@posts.route("/update_theme", methods=['GET', 'POST'])
+def update_theme():
+    form = ThemeForm()
+    if(request.method == 'POST'):
+        print(form.theme_id.data)
+        if(form.validate_on_submit):
+            print(form.theme_id.data)
+            theme = Theme.query.get(form.theme_id.data)
+            if(theme):
+                theme.name = form.name.data
+                theme.url = form.url.data
+                db.session.commit()
+                flash("theme successfully updated", 'success')
+            else:
+                flash("theme not found", 'danger')
+    return redirect(url_for('posts.theme'))
 
 
 @posts.route('/new_infos/<int:post_id>', methods=['GET', 'POST'])
@@ -180,10 +238,11 @@ def newinfo(post_id):
 def preview(post_id, active):
     test = False
     post = Post.query.get(post_id)
-    sub = Subscription.query.filter_by(post_id=post_id).all()
-    for sb in sub:
-        if(sb.user_id == current_user.id):
-            test = True
+    sub = Subscription.query.filter((Subscription.post_id == post_id) and (
+        Subscription.user_id == current_user.id)).first()
+    if(sub):
+        test = True
+    # print(test)
     form = PaymentMethodForm()
     register_form = RegistrationForm()
     login_form = LoginForm()
@@ -194,7 +253,7 @@ def preview(post_id, active):
         active = 0
     else:
         active = 1
-    print(active)
+    # print(active)
     for i in range(1, post.num_posts+1):
         for sc in pre_sceances:
             if(sc.num == i):

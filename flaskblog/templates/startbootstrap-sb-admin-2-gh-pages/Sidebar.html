@@ -43,6 +43,7 @@
         <span>Vérifier les certificats</span></a
       >
     </li>
+
     <!-- Nav Item - Pages Collapse Menu -->
     {%if current_user.is_authenticated %} {% if current_user.acc_rights==2 %}
     <li class="nav-item">
@@ -75,6 +76,12 @@
       <a class="nav-link" href="/formations">
         <i class="fas fa-archive"></i>
         <span>Mes formations</span></a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/theme/new">
+        <i class="fas fa-table"></i>
+        <span>Modifier les thèmes</span></a
       >
     </li>
     {% endif %}

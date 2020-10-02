@@ -19,6 +19,7 @@ class PostForm(FlaskForm):
     date = DateTimeLocalField(
         'Date de début de formation', format='%Y-%m-%d'+'T'+'%H:%M')
     zoom_link = StringField('Zoom link', validators=[DataRequired()])
+    theme = SelectField('Thème de la formation', coerce=int)
     images = StringField(
         'Images de la description de la scéance (Max: 3 par Scéance)')
     submit = SubmitField('Post')
@@ -36,6 +37,11 @@ class SceanceForm(FlaskForm):
 
 class DeleteImageForm(FlaskForm):
     image_id = HiddenField("image_id")
+    submit = SubmitField('Mettre à jour')
+
+
+class DeleteThemeForm(FlaskForm):
+    theme_id = HiddenField("theme_id")
     submit = SubmitField('Mettre à jour')
 
 
@@ -64,3 +70,10 @@ class PaymentMethodForm(FlaskForm):
     mode_de_paiement = SelectField('Mode de paiement', choices=[
         ('MoneyGram', 'MoneyGram'), ('Western Union', 'Western Union'), ('Virement Bancaire', 'Virement Bancaire'), ('Paypal', 'Paypal')])
     submit = SubmitField('Mettre à jour')
+
+
+class ThemeForm(FlaskForm):
+    theme_id = HiddenField("theme_id")
+    name = StringField('Nom du thème', validators=[DataRequired()])
+    url = StringField('Lien de l''image du thème', validators=[DataRequired()])
+    submit = SubmitField('Ajouter le thème')

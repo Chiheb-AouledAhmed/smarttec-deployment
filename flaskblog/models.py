@@ -45,7 +45,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    youtube_url = db.Column(db.String(200), nullable=True)
+    youtube_url = db.Column(db.Text, nullable=True)
     num_posts = db.Column(db.Integer, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
@@ -53,8 +53,8 @@ class Post(db.Model):
     description = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
-    zoom_link = db.Column(db.String(200))
-    theme = db.Column(db.String(20), default="theme 1")
+    zoom_link = db.Column(db.Text)
+    theme = db.Column(db.Integer, db.ForeignKey('theme.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     images = db.relationship('PostImage', backref='post', lazy=True)
     subscriptions = db.relationship(
@@ -92,7 +92,7 @@ class Sceance(db.Model):
                            default=datetime.utcnow)
     session_id = db.Column(
         db.Integer, db.ForeignKey('post.id'), nullable=False)
-    zoom_video = db.Column(db.String(200), nullable=True)
+    zoom_video = db.Column(db.Text, nullable=True)
     documents = db.relationship('Document', backref='sceance.id', lazy=False)
 
     def __repr__(self):
@@ -101,7 +101,7 @@ class Sceance(db.Model):
 
 class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), nullable=False)
+    url = db.Column(db.Text, nullable=False)
     sceance = db.Column(db.Integer, db.ForeignKey(
         'sceance.id'), nullable=False)
 
@@ -111,7 +111,7 @@ class Document(db.Model):
 
 class PostImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), nullable=False)
+    url = db.Column(db.Text, nullable=False)
     ima_post = db.Column(db.Integer, db.ForeignKey(
         'post.id'), nullable=False)
 
@@ -132,3 +132,13 @@ class Userinfo(db.Model):
 
     def __repr__(self):
         return f"Userinfo('{self.Nom}', '{self.Prenom}')"
+
+
+class Theme(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=True)
+    url = db.Column(db.Text, nullable=False)
+    theme_posts = db.relationship('Post', backref='post_theme', lazy=False)
+
+    def __repr__(self):
+        return f"Image('{self.id}', '{self.url}')"

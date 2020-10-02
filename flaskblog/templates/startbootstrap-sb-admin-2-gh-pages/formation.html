@@ -105,7 +105,7 @@
                     {{ render_field(form.youtube_url,value=post.youtube_url)
                     }}{{ render_field(form.price,value=post.price) }}{{
                     render_field(form.num_posts,value=post.num_posts)
-                    }}{{render_field(form.images)}}
+                    }}{{render_field(form.theme)}}{{render_field(form.images)}}
                   </div>
                 </fieldset>
                 <div class="form-group">
@@ -219,7 +219,8 @@
 </div>
 {% include 'modals/info_modal.html' %} {% with form=certif_form %} {% include
 'modals/add_certificate_modal.html' %} {% endwith %}{% with form=subform %} {%
-include 'modals/subform_modal.html' %} {% endwith %}
+include 'modals/subform_modal.html' %} {% endwith %}{% with form=delete_form %}
+{% include 'modals/delete_pic_modal.html' %} {% endwith %}
 <script>
   $(document).on("click", ".form-modif", function () {
     let sub_id=$(this).data("sub_id");
@@ -228,11 +229,13 @@ include 'modals/subform_modal.html' %} {% endwith %}
     let user = $(this).data("username");
     let method = $(this).data("method");
     let subid = $(this).data("subid");
+    console.log($("#sub_id"));
     $("#sub_id").attr("value", sub_id);
     console.log(user);
     console.log(date);
     //console.log("subid"+subid);
     $("#image_id").attr("value", image_id);
+    console.log($("#image_id").value);
     $("#cert_id").attr("value", subid);
     $("#username_info").html(user);
     $("#date_posted").html(date);

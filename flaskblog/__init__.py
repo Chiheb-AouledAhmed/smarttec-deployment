@@ -28,7 +28,7 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.transactions.routes import trans
     from flaskblog.errors.handlers import errors
-    from flaskblog.models import User, Post, Subscription, Sceance, PostImage, Document, Userinfo
+    from flaskblog.models import User, Post, Subscription, Sceance, PostImage, Document, Userinfo, Theme
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
@@ -43,6 +43,9 @@ def create_app(config_class=Config):
             "admin123").decode('utf-8')
         admin_user = User(username="admin",
                           email="adminadmin@admin.com", password=pwd, acc_rights=0)
+        default_theme = Theme(
+            name="no theme", url="https://vennexgroup.ch/storage/Clientes/VennexGroupSAS/Portal/imagenes/contenidos/13927-vennex404.svg")
+        db.session.add(default_theme)
         db.session.add(admin_user)
         db.session.commit()
         """

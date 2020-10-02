@@ -71,6 +71,7 @@ def mesformations(post_id):
                 scs.append(sc)
                 break
     for sub in subs:
+        #print("sub {}".format(sub))
         if(sub.post_id == post_id):
             if(sub.status == 1):
                 test = True
