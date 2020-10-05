@@ -1,4 +1,6 @@
 import operator
+import pandas as pd
+import os
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import login_user, current_user, logout_user, login_required
@@ -132,7 +134,19 @@ def theme():
 @ posts.route("/search", methods=['GET', 'POST'])
 def search():
     form = CertificateForm()
-    certifs = []
+    url = r'C:\Users\chihe\OneDrive\Bureau\extra\curr projects\13-Deployment-Linode\flaskblog\static\Tableau-pour-remplir-la-base-des-certif.xlsx'
+    df = pd.concat(pd.read_excel(url, sheet_name=None), ignore_index=True)
+    # print(df)
+    keys = ["ref", "nom", "prenom", "post", "date", "score"]
+    base_certifs = []
+    for j in range(len(df["ID"])):
+        base_certifs.append({"ref": "", "nom": "",
+                             "prenom": "", "post": "", "date": "", "score": ""})
+    for i in range(len(df.keys())):
+        for j in range(len(df[df.keys()[i]])):
+            base_certifs[j][keys[i]] = df[df.keys()[i]][j]
+
+    certifs = base_certifs
     for sub in Subscription.query.filter(Subscription.Certif_ref != None).all():
         certif = {"ref": "", "nom": "", "prenom": "",
                   "post": "", "date": "", "score": ""}
@@ -147,10 +161,12 @@ def search():
         certifs.append(certif)
     result = None
     if((form.validate_on_submit) and (request.method == 'POST')):
-        print(form.ref.data)
+        # print(form.ref.data)
         sub = Subscription.query.filter_by(
             Certif_ref=form.ref.data).first()
-        print(sub)
+        for cer in base_certifs:
+            if(cer["ref"] == form.ref.data):
+                result = cer
         if(sub):
             certif = {"ref": "", "nom": "", "prenom": "",
                       "post": "", "date": "", "score": ""}
@@ -163,12 +179,12 @@ def search():
             certif['date'] = sub.date_certif
             certif['score'] = sub.Test_score
             result = certif
-        else:
+        elif(not(result)):
             result = "Ce certificat n'existe pas"
     return render_template('search.html', form=form, certifs=certifs, result=result)
 
 
-@posts.route("/delete_image", methods=['GET', 'POST'])
+@ posts.route("/delete_image", methods=['GET', 'POST'])
 def delete_image():
     form = DeleteImageForm()
     if(form.validate_on_submit):
@@ -184,7 +200,7 @@ def delete_image():
     return redirect(url_for('posts.post', post_id=post_id))
 
 
-@posts.route("/delete_theme", methods=['GET', 'POST'])
+@ posts.route("/delete_theme", methods=['GET', 'POST'])
 def delete_theme():
     form = DeleteThemeForm()
     if(form.validate_on_submit):
@@ -203,7 +219,7 @@ def delete_theme():
     return redirect(url_for('posts.theme'))
 
 
-@posts.route("/update_theme", methods=['GET', 'POST'])
+@ posts.route("/update_theme", methods=['GET', 'POST'])
 def update_theme():
     form = ThemeForm()
     if(request.method == 'POST'):
@@ -221,7 +237,7 @@ def update_theme():
     return redirect(url_for('posts.theme'))
 
 
-@posts.route('/new_infos/<int:post_id>', methods=['GET', 'POST'])
+@ posts.route('/new_infos/<int:post_id>', methods=['GET', 'POST'])
 def newinfo(post_id):
     form = InfoForm()
     if(form.validate_on_submit):
@@ -341,13 +357,13 @@ def sceance(post_id, sceance_id):
     return render_template('sceance.html', form=form, sceance=sceance, documents=documents, delete_form=delete_form, post=post)
 
 
-@posts.route('/db_init', methods=['GET', 'POST'])
+@ posts.route('/db_init', methods=['GET', 'POST'])
 def db_init():
     form = FileForm()
     return render_template('db_init.html', form=form)
 
 
-@posts.route('/add_user', methods=['GET', 'POST'])
+@ posts.route('/add_user', methods=['GET', 'POST'])
 def add_user():
     form = FileForm()
     if(form.validate_on_submit):
