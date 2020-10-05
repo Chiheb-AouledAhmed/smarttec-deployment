@@ -134,7 +134,8 @@ def theme():
 @ posts.route("/search", methods=['GET', 'POST'])
 def search():
     form = CertificateForm()
-    url = r'C:\Users\chihe\OneDrive\Bureau\extra\curr projects\13-Deployment-Linode\flaskblog\static\Tableau-pour-remplir-la-base-des-certif.xlsx'
+    url = os.path.join(
+        current_app.root_path, 'static/Tableau-pour-remplir-la-base-des-certif.xlsx')
     df = pd.concat(pd.read_excel(url, sheet_name=None), ignore_index=True)
     # print(df)
     keys = ["ref", "nom", "prenom", "post", "date", "score"]
