@@ -91,6 +91,7 @@ def post(post_id):
             post.youtube_url = form.youtube_url.data
             post.price = form.price.data
             post.num_posts = form.num_posts.data
+            post.theme = form.theme.data
             if(len(post.sceances) > post.num_posts):
                 for i in range(post.num_posts, len(post.sceances)):
                     db.session.delete((post.sceances)[i])
