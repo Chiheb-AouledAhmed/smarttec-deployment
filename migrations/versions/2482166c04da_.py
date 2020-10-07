@@ -22,7 +22,7 @@ def upgrade():
                     existing_type=sa.VARCHAR(length=200),
                     nullable=True)
     op.alter_column('subscription', 'Certif_ref',
-                    existing_type=sa.Integer(), type_=sa.String(), nullable=True)
+                    existing_type=sa.Integer(), type_=sa.VARCHAR(length=200), nullable=True)
     # ### end Alembic commands ###
 
 
