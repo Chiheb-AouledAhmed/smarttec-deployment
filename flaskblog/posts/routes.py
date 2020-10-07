@@ -181,7 +181,7 @@ def search():
             certif['date'] = sub.date_certif
             certif['score'] = sub.Test_score
             result = certif
-        elif(not(result)):
+        elif(result == None):
             result = "Ce certificat n'existe pas"
     return render_template('search.html', form=form, certifs=certifs, result=result)
 
