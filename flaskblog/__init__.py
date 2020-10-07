@@ -34,7 +34,6 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
     app.register_blueprint(errors)
     app.register_blueprint(trans)
-
     with app.app_context():
         """
         db.drop_all()
