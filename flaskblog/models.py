@@ -69,7 +69,7 @@ class Post(db.Model):
 class Subscription(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Test_score = db.Column(db.Integer)
-
+    Certif_ref = db.Column(db.String, nullable=True)
     date_posted = date_certif = db.Column(db.DateTime, nullable=False,
                                           default=datetime.utcnow)
     date_certif = db.Column(db.DateTime, nullable=False,
