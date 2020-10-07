@@ -69,7 +69,7 @@ class Post(db.Model):
 class Subscription(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Test_score = db.Column(db.Integer)
-    Certif_ref = db.Column(db.Integer)
+    Certif_ref = db.Column(db.String, nullable=True)
     date_posted = date_certif = db.Column(db.DateTime, nullable=False,
                                           default=datetime.utcnow)
     date_certif = db.Column(db.DateTime, nullable=False,
@@ -101,7 +101,7 @@ class Sceance(db.Model):
 
 class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
+    title = db.Column(db.String(200), nullable=True)
     url = db.Column(db.Text, nullable=False)
     sceance = db.Column(db.Integer, db.ForeignKey(
         'sceance.id'), nullable=False)
