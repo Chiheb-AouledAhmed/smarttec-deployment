@@ -28,7 +28,7 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.transactions.routes import trans
     from flaskblog.errors.handlers import errors
-    from flaskblog.models import User, Post, Subscription, Sceance, PostImage, Document, Userinfo, Theme
+    from flaskblog.models import User, Post, Sceance, PostImage, Document, Userinfo, Theme
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
