@@ -256,10 +256,15 @@ def newinfo(post_id):
 def preview(post_id, active):
     test = False
     post = Post.query.get(post_id)
-    sub = Subscription.query.filter((Subscription.post_id == post_id) and (
-        Subscription.user_id == current_user.id)).first()
-    if(sub):
-        test = True
+    if((current_user.is_authenticated)):
+        subs = Subscription.query.filter(
+            (Subscription.post_id == post_id)).all()
+        for sub in subs:
+            if(sub.user_id == current_user.id):
+                test = True
+    print(test)
+    if(test):
+        return redirect(url_for('users.mesformations', post_id=post_id))
     # print(test)
     form = PaymentMethodForm()
     register_form = RegistrationForm()

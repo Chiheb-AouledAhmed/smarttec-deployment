@@ -242,7 +242,9 @@ def modify_user(default_url):
             if(update_form.email.data):
                 user.email = update_form.email.data
             if(update_form.password.data):
-                user.password = update_form.password.data
+                hashed_password = bcrypt.generate_password_hash(
+                    update_form.password.data).decode('utf-8')
+                user.password = hashed_password
             db.session.commit()
             flash('username '+username+" successfully updated", 'success')
         else:

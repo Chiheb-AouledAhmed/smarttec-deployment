@@ -51,6 +51,19 @@
             <div class="col-sm-12 course-section">
               <div class="section-title">{{sc.title}}</div>
               <ul class="section-list">
+                <li class="section-item">
+                  <a class="item" href="#">
+                    <span class="lecture-icon">
+                      <i class="fa fa-youtube-play"></i>
+                    </span>
+                    <div class="float-left">Lien de la vidéo</div>
+                    {% if test %}
+                    <button class="btn-primary btn-sm float-right lecture-start" onclick="window.location.href='{{sc.zoom_video}}'">
+                      Regarder <i class="fas fa-eye"></i>
+                    </button>
+                    {% endif %}
+                  </a>
+                </li>
                 {% for doc in sc.documents %}
                 <li class="section-item">
                   <a class="item" href="#">
