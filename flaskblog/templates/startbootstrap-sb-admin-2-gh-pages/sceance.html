@@ -54,9 +54,7 @@
                   <div>
                     {{ render_field(form.title,value=sceance.title) }} {{
                     render_field(form.content,id="content_form") }}
-                    {{render_field(form.date,value=sceance.date)}}{{
-                    render_field(form.document)
-                    }}{{render_field(form.zoom_video,value=sceance.zoom_video)}}
+                    {{render_field(form.date,value=sceance.date)}}{{render_field(form.zoom_video,value=sceance.zoom_video)}}
                   </div>
                 </fieldset>
                 <div class="form-group">
@@ -88,17 +86,37 @@
                 </li>
                 {% endif %} {% for document in documents %}
                 <li class="section-item">
-                  <a class="item" href="{{document}}">
+                  <a class="item" href="#">
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
-                    <div class="float-left">{{document}}</div>
-                    <div class="btn-primary btn-sm float-right lecture-start">
+                    <div class="float-left">{{document.title}}</div>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start"
+                      onclick="window.location.href='{{document.url}}';"
+                    >
                       Télécharger <i class="fas fa-download"></i>
+                    </div>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                      data-toggle="modal"
+                      data-target="#deleteDocumentModal"
+                      data-document_id="{{document.id}}"
+                      type="button"
+                    >
+                      Supprimer <i class="fas fa-trash-alt"></i>
                     </div>
                   </a>
                 </li>
                 {% endfor %}
+                <div
+                  class="btn btn-primary btn-sm float-right"
+                  data-toggle="modal"
+                  data-target="#addModal"
+                  type="button"
+                >
+                  <i class="fas fa-plus-circle"></i>Ajouter un document
+                </div>
               </ul>
             </div>
           </div>
@@ -107,8 +125,14 @@
     </div>
   </div>
 </div>
-
+{% with form=document_form %} {% include 'modals/add_document_modal.html' %} {%
+endwith %}{% with form=delete_doc_form %} {% include
+'modals/delete_document_modal.html' %} {% endwith %}
 <script>
+  $(document).on("click", ".form-modif", function () {
+    let document_id = $(this).data("document_id");
+    $("#document_id").attr("value", document_id);
+  });
   $(document).ready(function () {
     let post = {{sceance.content.split('\n')|safe}};
     $("#content_form").val(post.join('\n'));

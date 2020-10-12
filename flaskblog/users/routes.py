@@ -82,7 +82,7 @@ def mesformations(post_id):
         sceances.append((
             (((sc.start_date-datetime.now()) <= timedelta(days=1)) and (test)), sc))
     # print(sceances)
-    return render_template('mesFormations.html', current_user=current_user, post=post, sceances=sceances, scs=scs)
+    return render_template('mesFormations.html', current_user=current_user, post=post, test=test,sceances=sceances, scs=scs)
 
 
 @ users.route("/profile/<int:user_id>", methods=['GET', 'POST'])

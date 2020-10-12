@@ -35,9 +35,20 @@ class SceanceForm(FlaskForm):
     submit = SubmitField('Mettre à jour')
 
 
+class DocumentForm(FlaskForm):
+    title = StringField('Titre', validators=[DataRequired()])
+    url = StringField('Document URL', validators=[DataRequired()])
+    submit = SubmitField('Ajouter le document')
+
+
 class DeleteImageForm(FlaskForm):
     image_id = HiddenField("image_id")
     submit = SubmitField('Mettre à jour')
+
+
+class DeleteDocumentForm(FlaskForm):
+    document_id = HiddenField("document_id")
+    submit = SubmitField('Supprimer')
 
 
 class DeleteThemeForm(FlaskForm):

@@ -202,6 +202,21 @@ def delete_image():
     return redirect(url_for('posts.post', post_id=post_id))
 
 
+@ posts.route("/delete_document/<int:post_id>/<int:sceance_id>", methods=['GET', 'POST'])
+def delete_document(post_id, sceance_id):
+    form = DeleteDocumentForm()
+    if(form.validate_on_submit):
+        print()
+        document = Document.query.get(form.document_id.data)
+        if(document):
+            db.session.delete(document)
+            db.session.commit()
+            flash("document successfully deleted", 'success')
+        else:
+            flash("document not found", 'danger')
+    return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))
+
+
 @ posts.route("/delete_theme", methods=['GET', 'POST'])
 def delete_theme():
     form = DeleteThemeForm()
@@ -340,20 +355,23 @@ def certif():
 @ posts.route("/post/<int:post_id>/<int:sceance_id>", methods=['GET', 'POST'])
 def sceance(post_id, sceance_id):
     form = SceanceForm()
+    delete_doc_form = DeleteDocumentForm()
+    document_form = DocumentForm()
     delete_form = DeleteImageForm()
     sceance = ""
     for sc in Post.query.get(post_id).sceances:
         if(sc.num == sceance_id):
             sceance = sc
-    documents = [doc.url for doc in sceance.documents]
+    documents = sceance.documents
     if form.validate_on_submit():
+        """
         if form.document.data:
             doc_file = form.document.data
             cur_document = Document(
                 url=doc_file, sceance=sceance.id)
             db.session.add(cur_document)
             db.session.commit()
-
+        """
         sceance.title = form.title.data
         sceance.content = form.content.data
         sceance.date = form.date.data
@@ -361,13 +379,28 @@ def sceance(post_id, sceance_id):
         db.session.commit()
         flash('La sceance a été mise à jour!', 'success')
         return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))
-    return render_template('sceance.html', form=form, sceance=sceance, documents=documents, delete_form=delete_form, post=post)
+    return render_template('sceance.html', document_form=document_form, delete_doc_form=delete_doc_form, form=form, sceance=sceance, documents=documents, delete_form=delete_form, post_id=post_id)
 
 
 @ posts.route('/db_init', methods=['GET', 'POST'])
 def db_init():
     form = FileForm()
     return render_template('db_init.html', form=form)
+
+
+@ posts.route('/add_doc/<int:post_id>/<int:sceance_id>', methods=['GET', 'POST'])
+def add_doc(post_id, sceance_id):
+    form = DocumentForm()
+    for sc in Post.query.get(post_id).sceances:
+        if(sc.num == sceance_id):
+            sceance = sc
+    if(form.validate_on_submit):
+        doc = Document(title=form.title.data,
+                       url=form.url.data, sceance=sceance.id)
+        db.session.add(doc)
+        db.session.commit()
+        flash("Document ajouté avec succés", 'success')
+    return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))
 
 
 @ posts.route('/add_user', methods=['GET', 'POST'])

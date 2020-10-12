@@ -1,0 +1,46 @@
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un document</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      {% from 'macros/form.html' import render_field %}
+      <form
+        method="POST"
+        action="{{url_for('posts.add_doc', post_id=post_id, sceance_id=sceance.num)}}"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <fieldset class="form-group">
+            {{ form.csrf_token() }}
+            <div>
+              {{ render_field(form.title) }}{{ render_field(form.url) }}
+            </div>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          {{ form.submit(class="btn btn-primary",value="Ajouter un certificat")
+          }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
