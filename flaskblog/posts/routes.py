@@ -55,7 +55,7 @@ def delete_sub():
         sub.status = 1
     db.session.commit()
     if(sub):
-        flash('L''abonnement a été désactivé avec succès', 'success')
+        flash('L''abonnement a été modifié avec succès', 'success')
     else:
         flash('opération échouée', 'warning')
 
@@ -363,7 +363,7 @@ def sceance(post_id, sceance_id):
         if(sc.num == sceance_id):
             sceance = sc
     documents = sceance.documents
-    if form.validate_on_submit():
+    if form.validate_on_submit() and request.method=="POST":
         """
         if form.document.data:
             doc_file = form.document.data
@@ -374,7 +374,7 @@ def sceance(post_id, sceance_id):
         """
         sceance.title = form.title.data
         sceance.content = form.content.data
-        sceance.date = form.date.data
+        sceance.start_date = form.date.data
         sceance.zoom_video = form.zoom_video.data
         db.session.commit()
         flash('La sceance a été mise à jour!', 'success')
