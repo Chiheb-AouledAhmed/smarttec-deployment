@@ -65,6 +65,9 @@ def delete_sub():
 @posts.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     form = PostForm()
+    add_subs_form = AddSubsForm()
+    users = User.query.all()
+    add_subs_form.subs.choices = [(user.id, user.username) for user in users]
     themes = Theme.query.all()
     theme_choices = [(th.id, th.name)for th in themes]
     form.theme.choices = theme_choices
@@ -74,7 +77,7 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     subs = Subscription.query.filter_by(
         post_id=post_id).all()
-    users = [(sub.id, User.query.get(sub.user_id), sub.date_posted,
+    users = [(sub.status, sub.id, User.query.get(sub.user_id), sub.date_posted,
               sub.payment_method) for sub in subs]
     if(request.method == "POST"):
         if form.validate_on_submit():
@@ -97,7 +100,7 @@ def post(post_id):
                     db.session.delete((post.sceances)[i])
             elif(len(post.sceances) < post.num_posts):
                 for i in range(len(post.sceances)+1, post.num_posts+1):
-                    sceance = Sceance(title=form.title.data + "-Sceance "+str(i),
+                    sceance = Sceance(title=form.title.data + "-Séance "+str(i),
                                       session_id=post.id, start_date=post.start_date, num=i, content="")
                     db.session.add(sceance)
             db.session.commit()
@@ -107,7 +110,28 @@ def post(post_id):
             for field, errors in form.errors.items():
                 flash(((', '.join(errors))), 'danger')
             return redirect(url_for('posts.post', post_id=post.id))
-    return render_template('formation.html', title=post.title, post=post, form=form, delete_form=delete_form, users=users, certif_form=certif_form, subform=subform)
+    return render_template('formation.html', post_id=post_id, title=post.title, post=post, add_subs_form=add_subs_form, form=form, delete_form=delete_form, users=users, certif_form=certif_form, subform=subform)
+
+
+@posts.route("/post/add_subs/<int:post_id>", methods=['GET', 'POST'])
+def add_subs(post_id):
+    form = AddSubsForm()
+    subs = Subscription.query.filter_by(post_id=post_id).all()
+    if(form.validate_on_submit):
+        users = form.subs.data
+        for user in users:
+            test = False
+            for sub in subs:
+                if(str(sub.user_id) == user):
+                    test = True
+            if(test):
+                continue
+            sub = Subscription(user_id=user, post_id=post_id,
+                               payment_method="Ajouté par l'admin")
+            db.session.add(sub)
+        flash('Les abonnés ont été ajoutés avec succés', 'success')
+        db.session.commit()
+    return redirect(url_for('posts.post', post_id=post_id))
 
 
 @ posts.route("/subscribe/<int:post_id>")
@@ -363,7 +387,7 @@ def sceance(post_id, sceance_id):
         if(sc.num == sceance_id):
             sceance = sc
     documents = sceance.documents
-    if form.validate_on_submit() and request.method=="POST":
+    if form.validate_on_submit() and request.method == "POST":
         """
         if form.document.data:
             doc_file = form.document.data
@@ -377,7 +401,7 @@ def sceance(post_id, sceance_id):
         sceance.start_date = form.date.data
         sceance.zoom_video = form.zoom_video.data
         db.session.commit()
-        flash('La sceance a été mise à jour!', 'success')
+        flash('La Séance a été mise à jour!', 'success')
         return redirect(url_for('posts.sceance', post_id=post_id, sceance_id=sceance_id))
     return render_template('sceance.html', document_form=document_form, delete_doc_form=delete_doc_form, form=form, sceance=sceance, documents=documents, delete_form=delete_form, post_id=post_id)
 

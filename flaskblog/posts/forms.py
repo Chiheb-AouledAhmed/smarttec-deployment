@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField, HiddenField, SelectField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, HiddenField, SelectField, SelectMultipleField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import DataRequired, Length
@@ -88,3 +88,8 @@ class ThemeForm(FlaskForm):
     name = StringField('Nom du thème', validators=[DataRequired()])
     url = StringField('Lien de l''image du thème', validators=[DataRequired()])
     submit = SubmitField('Ajouter le thème')
+
+
+class AddSubsForm(FlaskForm):
+    subs = SelectMultipleField('Ajouter les abonnés')
+    submit= SubmitField('Ajouter le thème')

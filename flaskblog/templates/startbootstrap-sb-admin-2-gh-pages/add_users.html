@@ -23,7 +23,7 @@
               role="tab"
               aria-controls="home"
               aria-selected="true"
-              >Formatteurs</a
+              >Formateurs</a
             >
           </li>
           <li class="nav-item">
@@ -47,9 +47,7 @@
             aria-labelledby="contact-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Liste des formatteurs
-              </div>
+              <div class="section-title">Liste des Formateurs</div>
               <ul class="section-list">
                 {% for user in form_users %}
                 <li class="section-item form-modif">
@@ -57,9 +55,7 @@
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
-                    <div class="float-left">
-                      {{user.username}}
-                    </div>
+                    <div class="float-left">{{user.username}}</div>
                     <div
                       class="btn-primary btn-sm float-right lecture-start form-modif"
                       data-username="{{user.username}}"
@@ -90,7 +86,7 @@
               data-usertype="1"
               type="button"
             >
-              <i class="fas fa-plus-circle"></i>Ajouter un formatteur
+              <i class="fas fa-plus-circle"></i>Ajouter un Formateur
             </div>
           </div>
           <div
@@ -100,9 +96,7 @@
             aria-labelledby="contact-tab"
           >
             <div class="col-sm-12 course-section">
-              <div class="section-title">
-                Liste des utlisateurs
-              </div>
+              <div class="section-title">Liste des utlisateurs</div>
               <ul class="section-list">
                 {% for user in users %}
                 <li class="section-item form-modif">
@@ -110,9 +104,7 @@
                     <span class="lecture-icon">
                       <i class="fa fa-youtube-play"></i>
                     </span>
-                    <div class="float-left">
-                      {{user.username}}
-                    </div>
+                    <div class="float-left">{{user.username}}</div>
                     <div
                       class="btn-primary btn-sm float-right lecture-start form-modif"
                       data-username="{{user.username}}"
@@ -130,6 +122,13 @@
                       data-target="#modifyModal"
                     >
                       Modifier <i class="far fa-id-badge"></i>
+                    </div>
+                    <div
+                      class="btn-primary btn-sm float-right lecture-start form-modif"
+                      onclick="window.location.href='/profile/{{user.id}}'"
+                      type="button"
+                    >
+                      <i class="far fa-id-badge"></i>Voir le profil
                     </div>
                   </a>
                 </li>
@@ -163,7 +162,7 @@
     let img_path = $(this).data("img_path");
     let user_type = $(this).data("usertype");
     console.log(user_type);
-    img_path = "2e32b4c96a8d8f10.jpg";
+    img_path = "default.jpg";
     $(".this_user").attr("value", username);
     console.log(username);
     console.log($(".this_user").value);
@@ -178,7 +177,7 @@
       img_path
     );
 
-    if (user_type == 1) $("#addModalLabel").html("Ajouter un formatteur");
+    if (user_type == 1) $("#addModalLabel").html("Ajouter un Formateur");
     $(".acc_rights").attr("value", user_type);
 
     $(".modal-body .media #img-profile").attr("src", img);

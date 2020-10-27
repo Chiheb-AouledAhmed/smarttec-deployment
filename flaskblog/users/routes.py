@@ -71,7 +71,7 @@ def mesformations(post_id):
                 scs.append(sc)
                 break
     for sub in subs:
-        #print("sub {}".format(sub))
+        # print("sub {}".format(sub))
         if(sub.post_id == post_id):
             if(sub.status == 1):
                 test = True
@@ -82,7 +82,16 @@ def mesformations(post_id):
         sceances.append((
             (((sc.start_date-datetime.now()) <= timedelta(days=1)) and (test)), sc))
     # print(sceances)
-    return render_template('mesFormations.html', current_user=current_user, post=post, test=test,sceances=sceances, scs=scs)
+    return render_template('mesFormations.html', current_user=current_user, post=post, test=test, sceances=sceances, scs=scs)
+
+
+@ users.route("/profile", methods=['GET', 'POST'])
+def profile_ano():
+    name = request.form.get('search')
+    user = User.query.filter_by(username=name).first()
+    if(user):
+        return redirect(url_for('users.profile', user_id=user.id))
+    return render_template('usernotfound.html')
 
 
 @ users.route("/profile/<int:user_id>", methods=['GET', 'POST'])
