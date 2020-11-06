@@ -352,7 +352,7 @@ def subscription(user_id, post_id):
     if(request.method == 'POST'):
         payment_method = form.mode_de_paiement.data
         subscription = Subscription(
-            user_id=user_id, post_id=post_id, payment_method=payment_method)
+            user_id=user_id, post_id=post_id, payment_method=payment_method,status=2)
         db.session.add(subscription)
         db.session.commit()
         flash('votre inscription a été réussite', 'success')
